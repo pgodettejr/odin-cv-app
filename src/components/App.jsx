@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
+import reactLogo from '../assets/react.svg'
 import viteLogo from '/vite.svg'
-import './styles/App.css'
+import '../styles/App.css'
 
 // TODO: Refresh/review all React content in TOP from 'Getting Started With React' section up to this project if needed
 
