@@ -5,7 +5,7 @@ import './styles/App.css'
 
 // TODO: Refresh/review all React content in TOP from 'Getting Started With React' section up to this project if needed
 
-// TODO: Look at Rendering Techniques lesson and focus on 'conditional rendering' docs for rendering the form inputs as HTML elements when the form is submitted via the Submit button. Put the logic in a separate JSX/components file or directory
+// TODO: Look at Rendering Techniques lesson and focus on 'conditional rendering' docs for rendering the form inputs as HTML elements when the form is submitted via the Submit button. Put the logic in a separate JSX/components file or directory (this is purely for Submit button logic)
 
 // Use console.log...a lot (confirm React batching state updates on re-renders)
 
@@ -208,9 +208,10 @@ function App() {
           </div>
 
           {/* DISPLAY the Edit and Submit buttons at the bottom of the form */}
+          {/* Set disabled to "false" on the Edit button and to "true" on the Submit button when the Submit button is clicked. Edit is only available after submitting */}
           <div className="form-buttons">
-            <button type='button' id='editButton' onClick={handleEditButton} autoFocus>Edit</button>
-            <button type='button'id='submitButton' onClick={handleSubmitButton}>Submit</button>
+            <button type='button' id='editButton' onClick={handleEditButton} disabled='true' >Edit</button>
+            <button type='button'id='submitButton' onClick={handleSubmitButton} disabled='false' autoFocus >Submit</button>
           </div>
         </form>
       </div>
