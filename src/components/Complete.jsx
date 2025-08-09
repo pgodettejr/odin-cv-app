@@ -1,15 +1,16 @@
 import Incomplete from "./Incomplete"
 
-// TODO: Write a function or component for the Edit button that returns an event listener that runs the code. Utilize 'useState' (in App component since we have to "lift the state up"?) to change the state of the app when each button is interacted with
+// TODO: Write a function or component for the Edit button that returns an event listener that runs the code. Utilize 'useState' (in App component since we have to "lift the state up"?) to change the state of the app when the button is interacted with
 
 export default function Complete() {
   // WHEN the user inputs all elements in the form, submits it, THEN clicks the Edit button
   // CALL the editButton event listener that will:
-  function handleEditButton() {
+  function handleEditButton(e) {
     // DISPLAY all the form elements with the previously entered info in each one
     // setResumeForm((editForm) => editForm);
     // setResumeForm(toggleForm OR resumeForm);
 
+    e.preventDefault();
     // May need to employ rendering techniques here (if certain form elements are complete, then... ternary/conditional/&& statement)
     <Incomplete />
   }

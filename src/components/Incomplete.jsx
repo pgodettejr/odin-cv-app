@@ -1,18 +1,22 @@
 import Complete from "./Complete"
 
-// TODO: Write a function or component for the Edit button that returns an event listener that runs the code. Utilize 'useState' (in App component since we have to "lift the state up"?) to change the state of the app when each button is interacted with
+// TODO: Write a function or component for the Submit button that returns an event listener that runs the code. Utilize 'useState' (in App component since we have to "lift the state up"?) to change the state of the app when the button is interacted with
 
 export default function Incomplete() {
   // WHEN the user inputs all elements in the form & clicks the Submit button
   // CALL the submitButton event listener that will:
-  function handleSubmitButton() {
+  function handleSubmitButton(e) {
     // 	REMOVE (GRAY OUT/FADE) the Heading element - add CSS styling as JS here
     // 	REMOVE (GRAY OUT/FADE) the form and all elements within the form - add CSS styling as JS here
     // 	SHOW a Heading element at the bottom: "Thank You! Your info has been submitted"
     // 	SHOW all the info inputted by the user in an HTML format
+    e.preventDefault();
 
     // May need to employ rendering techniques here (if certain form elements are complete, then... ternary/conditional/&& statement)
-    <Complete />
+    <Complete 
+      isComplete={resumeForm}
+      handleEditButton={() => setResumeForm(0)}
+    />
   }
 
   return (
