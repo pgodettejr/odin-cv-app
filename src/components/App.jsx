@@ -1,6 +1,9 @@
 import { useState } from 'react'
-import Complete from './Complete'
-import Incomplete from './Incomplete'
+import Personal from "./Personal";
+import Experience from "./Experience";
+import Education from "./Education";
+// import Complete from './Complete'
+// import Incomplete from './Incomplete'
 import reactLogo from '../assets/react.svg'
 import viteLogo from '/vite.svg'
 import '../styles/App.css'
@@ -27,14 +30,220 @@ import '../styles/App.css'
 // SHOW the Heading & CV (Resume) form
 
 // An example array that allows us to toggle the form state based on Edit/Submit buttons being interacted with. Default is "incomplete".
-const formState = ["incomplete", "complete"]; 
+// const formState = ["incomplete", "complete"]; 
 
 // Do we need to pass a callback to our "setResumeForm" function in our "handle" function for Edit/Submit buttons? (More on State lesson)
 // setResumeForm((prevForm) => ({...prevForm, ???}));
 
-function App() {
-  // We likely only need to declare one state for the entire form, not multiple states per section
-  const [count, setCount] = useState(0)
+// IMPORTANT: Rename the "startDate, endDate" variables "schoolStart, schoolEnd, jobStart, jobEnd" if needed
+
+// This is the "multiple states per section" version of the app, split up into 3 components for each respective section of the form
+// BRANCH: Create "Add work experience" and "Add education" buttons that generate another Experience and Education component respectively
+export default function App() {
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [submitted, setSubmitted] = useState(false); // This is for setting the status and converting all the form data to HTML elements when "Submit" is clicked
+
+  // STATES
+  // FORM is being edited
+  // FORM is complete
+  // FORM is submitted
+  // USER interacted with empty/not empty input in the form
+
+  function toggleDisabled() {
+    setIsDisabled(!isDisabled);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    // TODO: Test this function out when the form is submitted after adding HTML elements to display each piece of info. Might need to rename startDate and endDate if React doesn't accept "duplicates"
+    // setSubmitted({
+    //   fullName,
+    //   email,
+    //   phoneNum,
+    //   company,
+    //   position,
+    //   startDate,
+    //   endDate,
+    //   location,
+    //   description,
+    //   school,
+    //   major,
+    // });
+    setSubmitted(true);
+    console.log("The Submit button was clicked and is now disabled");
+    toggleDisabled();
+  }
+
+  function handleEdit(e) {
+    e.preventDefault();
+    console.log("The Edit button was clicked and is now disabled");
+    toggleDisabled();
+  }
+
+  // DISPLAY all of these elements in the middle of the webpage
+  if (submitted) {
+    return (
+      // TODO:
+      // HTML elements for Personal, Experience and Education components go here. InnerHTML under each component called? Or something else?
+      // We might need this under the OTHER return statement below instead of here. Or remove the form elements from the other components (see other modules)
+
+      // Example for displaying form data
+
+      // {submitted && (
+      //   <div>
+      //     <h2>Submitted Information:</h2>
+      //     <p><strong>Name:</strong> {submitted.fullName}</p>
+      //     <p><strong>Email:</strong> {submitted.email}</p>
+      //   </div>
+      // )}
+
+      // If this works for displaying the form info as HTML, might need to change the classNames to just one name for styling instead of each div having its own separate classNames
+      <div className="completed-form">
+        <h2>Personal Info</h2>
+        <div className="full-name">
+          <h3>Name</h3>
+          <p>{Personal.fullName}</p>
+        </div>
+        <div className="email-address">
+          <h3>Email</h3>
+          <p>{Personal.email}</p>
+        </div>
+        <div className="tel-phone-num">
+          <h3>Phone Number</h3>
+          <p>{Personal.phoneNum}</p>
+        </div>
+
+        <h2>Work Experience</h2>
+        <div className="company-1">
+          <div className="company-name-1">
+            <h3>Company</h3>
+            <p>{Experience.company}</p>
+          </div>
+          <div className="job-position-1">
+            <h3>Position</h3>
+            <p>{Experience.position}</p>
+          </div>
+          <div className="date-range-1">
+            <h3>Start Date</h3>
+            <p>{Experience.startDate}</p>
+          </div>
+          <div className="date-range-1">
+            <h3>End Date</h3>
+            <p>{Experience.endDate}</p>
+          </div>
+          <div className="location-1">
+            <h3>Location</h3>
+            <p>{Experience.location}</p>
+          </div>
+          <div className="description-1">
+            <h3>Main Responsibilities</h3>
+            <p>{Experience.description}</p>
+          </div>
+        </div>
+
+        {/* TODO: Hard coding this for now. Test it out by filling out both Work Experience fields, then filling out only one. If it doesn't work, see TODO just below this section  */}
+        <div className="company-2">
+          <div className="company-name-2">
+            <h3>Company</h3>
+            <p>{Experience.company}</p>
+          </div>
+          <div className="job-position-2">
+            <h3>Position</h3>
+            <p>{Experience.position}</p>
+          </div>
+          <div className="date-range-2">
+            <h3>Start Date</h3>
+            <p>{Experience.startDate}</p>
+          </div>
+          <div className="date-range-2">
+            <h3>End Date</h3>
+            <p>{Experience.endDate}</p>
+          </div>
+          <div className="location-2">
+            <h3>Location</h3>
+            <p>{Experience.location}</p>
+          </div>
+          <div className="description-2">
+            <h3>Main Responsibilities</h3>
+            <p>{Experience.description}</p>
+          </div>
+        </div>
+      </div>
+
+      // TODO: Implement a "forEach" method or, preferrably, a "map" method for each Work Experience and Education section filled out by the user? Either way, we need to create an array (with objects?).
+      // We COULD grab each "input" element ("label" elements too?) via DOM manipulation through querySelectorAll, take that NodeList and use forEach to show the filled out info on the submitted UI
+      // Look at our To-Do List project for any other ideas
+
+      // <form onSubmit={((e) => e.preventDefault(), setSubmitted(true))}>
+      //   <Personal />
+      //   <Experience />
+      //   <Experience />
+      //   <Education />
+      //   <Education />
+      // </form>
+    );
+  } else {
+    return (
+      <>
+        <div className="App">
+          <Personal />
+          <Experience />
+          <Experience />
+          <Education />
+          <Education />
+          <div className="form-buttons">
+            <button
+              type="button"
+              id="editButton"
+              onClick={handleEdit}
+              disabled={isDisabled}
+            >
+              {isDisabled ? "Disabled" : "Enabled"}
+              Edit
+            </button>
+            <button
+              type="submit" // Change this back to "button" if it doesn't work?
+              id="submitButton"
+              onClick={handleSubmit}
+              disabled={!isDisabled}
+            >
+              {isDisabled ? "Disabled" : "Enabled"}
+              Submit
+            </button>
+          </div>
+        </div>
+        <div>
+          <a href="https://vite.dev" target="_blank">
+            <img src={viteLogo} className="logo" alt="Vite logo" />
+          </a>
+          <a href="https://react.dev" target="_blank">
+            <img src={reactLogo} className="logo react" alt="React logo" />
+          </a>
+        </div>
+        <h1>Vite + React</h1>
+        <div className="card">
+          <button onClick={() => setCount((count) => count + 1)}>
+            count is {count}
+          </button>
+          <p>
+            Edit <code>src/App.jsx</code> and save to test HMR
+          </p>
+        </div>
+        <p className="read-the-docs">
+          Click on the Vite and React logos to learn more
+        </p>
+      </>
+    );
+  }
+}
+
+// END
+
+
+// My initial attempt at the "One state for the whole form" version of the app
+
+// function App() {
+  // const [count, setCount] = useState(0)
 
   // STATES
   // FORM is being edited
@@ -45,40 +254,38 @@ function App() {
   // Not sure what we would use this for, come back to it later
   // For the useState prop/argument, if I'm only using one single state, will I need to make an array with nested objects for the entire form with each object containing the property/value representing each input? .map thru it? [{title: name, id: 0}, {title: location, id: 1}, etc.]
   // Group into a single state if we don't know how many pieces of state we need (forms where user adds custom fields). If we only need to set one field alone, do "setResumeForm{...form, fieldName: userInput}"
-  const [resumeForm, setResumeForm] = useState(formState[0]);
+  // const [resumeForm, setResumeForm] = useState(formState[0]);
 
   // DISPLAY all of these elements in the middle of the webpage
-  return (
-    <>
-      <Incomplete
-        isComplete={resumeForm}
-        handleSubmitButton={() => setResumeForm(1)}
-      />
+//   return (
+//     <>
+//       <Incomplete
+//         isComplete={resumeForm}
+//         handleSubmitButton={() => setResumeForm(1)}
+//       />
 
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+//       <div>
+//         <a href="https://vite.dev" target="_blank">
+//           <img src={viteLogo} className="logo" alt="Vite logo" />
+//         </a>
+//         <a href="https://react.dev" target="_blank">
+//           <img src={reactLogo} className="logo react" alt="React logo" />
+//         </a>
+//       </div>
+//       <h1>Vite + React</h1>
+//       <div className="card">
+//         <button onClick={() => setCount((count) => count + 1)}>
+//           count is {count}
+//         </button>
+//         <p>
+//           Edit <code>src/App.jsx</code> and save to test HMR
+//         </p>
+//       </div>
+//       <p className="read-the-docs">
+//         Click on the Vite and React logos to learn more
+//       </p>
+//     </>
+//   )
+// }
 
-export default App
-
-// END
+// export default App
