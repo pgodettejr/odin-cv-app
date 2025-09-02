@@ -17,7 +17,8 @@ import '../styles/App.css'
 
 // An example of a controlled component:
 // const [value, setValue] = useState("");
-    // For 'input' elements below: value={value}, onChange={(e or event) => setValue(e or event.target.value)}
+
+// For 'input' elements below: value={value}, onChange={(e or event) => setValue(e or event.target.value)}
 
 // DOCS
 // State: A Component's Memory (Challenges) - reference to how we should use React to do our forms? there are states for every input though
@@ -38,10 +39,15 @@ import '../styles/App.css'
 // IMPORTANT: Rename the "startDate, endDate" variables "schoolStart, schoolEnd, jobStart, jobEnd" if needed
 
 // This is the "multiple states per section" version of the app, split up into 3 components for each respective section of the form
-// BRANCH: Create "Add work experience" and "Add education" buttons that generate another Experience and Education component respectively
+// BRANCH: Create "Add work experience" and "Add education" buttons that generate another Experience and Education component respectively (WITHOUT the heading titles)
 export default function App() {
+  const [count, setCount] = useState(0)
+
   const [isDisabled, setIsDisabled] = useState(false);
   const [submitted, setSubmitted] = useState(false); // This is for setting the status and converting all the form data to HTML elements when "Submit" is clicked
+
+  // May need this to display submitted data on Submit?
+  // const [formData, setFormData] = useState({});
 
   // STATES
   // FORM is being edited
@@ -76,6 +82,7 @@ export default function App() {
 
   function handleEdit(e) {
     e.preventDefault();
+    setSubmitted(false); // Do we need this?
     console.log("The Edit button was clicked and is now disabled");
     toggleDisabled();
   }
@@ -83,94 +90,95 @@ export default function App() {
   // DISPLAY all of these elements in the middle of the webpage
   if (submitted) {
     return (
-      // TODO:
-      // HTML elements for Personal, Experience and Education components go here. InnerHTML under each component called? Or something else?
-      // We might need this under the OTHER return statement below instead of here. Or remove the form elements from the other components (see other modules)
+      <>
+        <h1>CV/Resumé App</h1>
 
-      // Example for displaying form data
+        {/* TODO:
+        HTML elements for Personal, Experience and Education components go here. InnerHTML under each component called? Or something else?
+        We might need this under the OTHER return statement below instead of here. Or remove the form elements from the other components (see other modules) */}
+        {/* Example for displaying form data */}
 
-      // {submitted && (
-      //   <div>
-      //     <h2>Submitted Information:</h2>
-      //     <p><strong>Name:</strong> {submitted.fullName}</p>
-      //     <p><strong>Email:</strong> {submitted.email}</p>
-      //   </div>
-      // )}
-
-      // If this works for displaying the form info as HTML, might need to change the classNames to just one name for styling instead of each div having its own separate classNames
-      <div className="completed-form">
-        <h2>Personal Info</h2>
-        <div className="full-name">
-          <h3>Name</h3>
-          <p>{Personal.fullName}</p>
+        {/* {submitted && (
+           <div>
+             <h2>Submitted Information:</h2>
+             <p><strong>Name:</strong> {submitted.fullName}</p>
+             <p><strong>Email:</strong> {submitted.email}</p>
+           </div>
+         )} */}
+        {/* TODO: only the headings are showing, not the actual info entered on the form via the <p> elements. Dot notation is wrong. Fix */}
+        {/* Still might need to change the classNames to just one name for styling instead of each div having its own separate classNames */}
+        <div className="completed-form">
+          <h2>Personal Info</h2>
+          <div className="full-name">
+            <h3>Name</h3>
+            <p>{Personal.fullName}</p>
+          </div>
+          <div className="email-address">
+            <h3>Email</h3>
+            <p>{Personal.email}</p>
+          </div>
+          <div className="tel-phone-num">
+            <h3>Phone Number</h3>
+            <p>{Personal.phoneNum}</p>
+          </div>
+          <h2>Work Experience</h2>
+          <div className="company-1">
+            <div className="company-name-1">
+              <h3>Company</h3>
+              <p>{Experience.company}</p>
+            </div>
+            <div className="job-position-1">
+              <h3>Position</h3>
+              <p>{Experience.position}</p>
+            </div>
+            <div className="date-range-1">
+              <h3>Start Date</h3>
+              <p>{Experience.startDate}</p>
+            </div>
+            <div className="date-range-1">
+              <h3>End Date</h3>
+              <p>{Experience.endDate}</p>
+            </div>
+            <div className="location-1">
+              <h3>Location</h3>
+              <p>{Experience.location}</p>
+            </div>
+            <div className="description-1">
+              <h3>Main Responsibilities</h3>
+              <p>{Experience.description}</p>
+            </div>
+          </div>
+          {/* TODO: Hard coding this for now. Test it out by filling out both Work Experience fields, then filling out only one. If it doesn't work, see TODO just below this section  */}
+          <div className="company-2">
+            <div className="company-name-2">
+              <h3>Company</h3>
+              <p>{Experience.company}</p>
+            </div>
+            <div className="job-position-2">
+              <h3>Position</h3>
+              <p>{Experience.position}</p>
+            </div>
+            <div className="date-range-2">
+              <h3>Start Date</h3>
+              <p>{Experience.startDate}</p>
+            </div>
+            <div className="date-range-2">
+              <h3>End Date</h3>
+              <p>{Experience.endDate}</p>
+            </div>
+            <div className="location-2">
+              <h3>Location</h3>
+              <p>{Experience.location}</p>
+            </div>
+            <div className="description-2">
+              <h3>Main Responsibilities</h3>
+              <p>{Experience.description}</p>
+            </div>
+          </div>
         </div>
-        <div className="email-address">
-          <h3>Email</h3>
-          <p>{Personal.email}</p>
-        </div>
-        <div className="tel-phone-num">
-          <h3>Phone Number</h3>
-          <p>{Personal.phoneNum}</p>
-        </div>
+      </>
 
-        <h2>Work Experience</h2>
-        <div className="company-1">
-          <div className="company-name-1">
-            <h3>Company</h3>
-            <p>{Experience.company}</p>
-          </div>
-          <div className="job-position-1">
-            <h3>Position</h3>
-            <p>{Experience.position}</p>
-          </div>
-          <div className="date-range-1">
-            <h3>Start Date</h3>
-            <p>{Experience.startDate}</p>
-          </div>
-          <div className="date-range-1">
-            <h3>End Date</h3>
-            <p>{Experience.endDate}</p>
-          </div>
-          <div className="location-1">
-            <h3>Location</h3>
-            <p>{Experience.location}</p>
-          </div>
-          <div className="description-1">
-            <h3>Main Responsibilities</h3>
-            <p>{Experience.description}</p>
-          </div>
-        </div>
-
-        {/* TODO: Hard coding this for now. Test it out by filling out both Work Experience fields, then filling out only one. If it doesn't work, see TODO just below this section  */}
-        <div className="company-2">
-          <div className="company-name-2">
-            <h3>Company</h3>
-            <p>{Experience.company}</p>
-          </div>
-          <div className="job-position-2">
-            <h3>Position</h3>
-            <p>{Experience.position}</p>
-          </div>
-          <div className="date-range-2">
-            <h3>Start Date</h3>
-            <p>{Experience.startDate}</p>
-          </div>
-          <div className="date-range-2">
-            <h3>End Date</h3>
-            <p>{Experience.endDate}</p>
-          </div>
-          <div className="location-2">
-            <h3>Location</h3>
-            <p>{Experience.location}</p>
-          </div>
-          <div className="description-2">
-            <h3>Main Responsibilities</h3>
-            <p>{Experience.description}</p>
-          </div>
-        </div>
-      </div>
-
-      // TODO: Implement a "forEach" method or, preferrably, a "map" method for each Work Experience and Education section filled out by the user? Either way, we need to create an array (with objects?).
+      // TODO: Implement a "forEach" method or, preferably, a "map" method for each Work Experience and Education section filled out by the user? Either way, we need to create an array (with objects?).
       // We COULD grab each "input" element ("label" elements too?) via DOM manipulation through querySelectorAll, take that NodeList and use forEach to show the filled out info on the submitted UI
       // Look at our To-Do List project for any other ideas
 
@@ -185,10 +193,13 @@ export default function App() {
   } else {
     return (
       <>
+        <h1>CV/Resumé App</h1>
         <div className="App">
           <Personal />
+          <h2>Work Experience</h2>
           <Experience />
           <Experience />
+          <h2>Education</h2>
           <Education />
           <Education />
           <div className="form-buttons">
@@ -196,22 +207,23 @@ export default function App() {
               type="button"
               id="editButton"
               onClick={handleEdit}
-              disabled={isDisabled}
+              disabled={!isDisabled}
             >
-              {isDisabled ? "Disabled" : "Enabled"}
+              {/* {isDisabled ? "Disabled" : "Enabled"} */}
               Edit
             </button>
             <button
               type="submit" // Change this back to "button" if it doesn't work?
               id="submitButton"
               onClick={handleSubmit}
-              disabled={!isDisabled}
+              disabled={isDisabled}
             >
-              {isDisabled ? "Disabled" : "Enabled"}
+              {/* {isDisabled ? "Disabled" : "Enabled"} */}
               Submit
             </button>
           </div>
         </div>
+
         <div>
           <a href="https://vite.dev" target="_blank">
             <img src={viteLogo} className="logo" alt="Vite logo" />

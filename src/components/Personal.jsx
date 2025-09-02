@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+// TODO: Add "submitted" status as a {prop} in this function, then pass it down to the return statement as a conditional render via if/else statement or ternary operator ( {submitted ? show innerHTML or whatever HTML : form elements} ). See code just under <h1> in the App component as an example of ternary operator rendering the HTML elements upon submission.
+
 export default function Personal() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");

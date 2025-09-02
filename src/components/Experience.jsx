@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+// TODO: Add "submitted" status as a {prop} in this function, then pass it down to the return statement as a conditional render via if/else statement or ternary operator ( {submitted ? show innerHTML or whatever HTML : form elements} ). See code just under <h1> in the App component as an example of ternary operator rendering the HTML elements upon submission.
+
 export default function Experience() {
   const [company, setCompany] = useState("");
   const [position, setPosition] = useState("");
@@ -36,7 +38,7 @@ export default function Experience() {
   return (
     // Possibly move form over to App.jsx as one form so we don't have multiple forms to submit?
     <form onSubmit={(e) => e.preventDefault()}>
-      <h2>Work Experience</h2>
+      {/* <h2>Work Experience</h2> */}
       <div className="form-grid">
         <label htmlFor="company-name">Company</label>
         <input

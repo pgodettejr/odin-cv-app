@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+// TODO: Add "submitted" status as a {prop} in this function, then pass it down to the return statement as a conditional render via if/else statement or ternary operator ( {submitted ? show innerHTML or whatever HTML : form elements} ). See code just under <h1> in the App component as an example of ternary operator rendering the HTML elements upon submission.
+
 // TODO: May need to rename startDate, endDate and location due to same naming convention as Experience component? Or does React allow "duplicates"?
 
 export default function Education() {
@@ -33,7 +35,7 @@ export default function Education() {
   return (
     // Possibly move form over to App.jsx as one form so we don't have multiple forms to submit?
     <form onSubmit={(e) => e.preventDefault()}>
-      <h2>Education</h2>
+      {/* <h2>Education</h2> */}
       <div className="form-grid">
         <label htmlFor="school-name">Institution</label>
         <input
@@ -45,7 +47,7 @@ export default function Education() {
       </div>
 
       <div className="form-grid">
-        <label htmlFor="study-major">Position</label>
+        <label htmlFor="study-major">Title of Study/Major</label>
         <input
           name="study-major"
           id="study-major"
