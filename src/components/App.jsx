@@ -108,7 +108,7 @@ export default function App() {
         {/* TODO: only the headings are showing, not the actual info entered on the form via the <p> elements. Dot notation is wrong. Fix */}
         {/* Still might need to change the classNames to just one name for styling instead of each div having its own separate classNames */}
         <div className="completed-form">
-          <h2>Personal Info</h2>
+          {/* <h2>Personal Info</h2>
           <div className="full-name">
             <h3>Name</h3>
             <p>{Personal.fullName}</p>
@@ -120,16 +120,20 @@ export default function App() {
           <div className="tel-phone-num">
             <h3>Phone Number</h3>
             <p>{Personal.phoneNum}</p>
-          </div>
+          </div> */}
+
+          {/* Having this shows the info but still as "form" elements, not as HTML elements with headings and <p> tags. "Personal" component completely ignores the "if" statement I wrote on it */}
+          <Personal /> 
+
           <h2>Work Experience</h2>
           <div className="company-1">
             <div className="company-name-1">
               <h3>Company</h3>
-              <p>{Experience.company}</p>
+              <p>{Experience.Company}</p>
             </div>
             <div className="job-position-1">
               <h3>Position</h3>
-              <p>{Experience.position}</p>
+              <p>{Experience.Position}</p>
             </div>
             <div className="date-range-1">
               <h3>Start Date</h3>
