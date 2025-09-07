@@ -44,7 +44,7 @@ export default function App() {
   const [count, setCount] = useState(0)
 
   const [isDisabled, setIsDisabled] = useState(false);
-  const [submitted, setSubmitted] = useState(false); // This is for setting the status and converting all the form data to HTML elements when "Submit" is clicked
+  const [submitted, setSubmitted] = useState(false); // This is for setting the status and converting all the form data to HTML elements when "Submit" is clicked. We could try 'useState({})' if we go with the previous 'setSubmitted' call in the handleSubmit function.
 
   // May need this to display submitted data on Submit?
   // const [formData, setFormData] = useState({});
@@ -61,7 +61,7 @@ export default function App() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    // TODO: Test this function out when the form is submitted after adding HTML elements to display each piece of info. Might need to rename startDate and endDate if React doesn't accept "duplicates"
+    // TODO: Test this function out when the form is submitted after adding HTML elements to display each piece of info. Might need to rename startDate and endDate if React doesn't accept "duplicates". Doesn't work with simply values by itself. Need "property: key"?
     // setSubmitted({
     //   fullName,
     //   email,
@@ -129,11 +129,11 @@ export default function App() {
           <div className="company-1">
             <div className="company-name-1">
               <h3>Company</h3>
-              <p>{Experience.Company}</p>
+              {/* <p>{Experience.Company}</p> - Even when the "Company" propertyName is capitalized, it still doesn't render on Submit */}
             </div>
             <div className="job-position-1">
               <h3>Position</h3>
-              <p>{Experience.Position}</p>
+              {/* <p>{Experience.Position}</p> - Even when the "Position" propertyName is capitalized, it still doesn't render on Submit */}
             </div>
             <div className="date-range-1">
               <h3>Start Date</h3>
@@ -178,6 +178,27 @@ export default function App() {
               <h3>Main Responsibilities</h3>
               <p>{Experience.description}</p>
             </div>
+          </div>
+
+          <div className="form-buttons">
+            <button
+              type="button"
+              id="editButton"
+              onClick={handleEdit}
+              disabled={isDisabled}
+            >
+              {/* {isDisabled ? "Disabled" : "Enabled"} */}
+              Edit
+            </button>
+            <button
+              type="submit" // Change this back to "button" if it doesn't work?
+              id="submitButton"
+              onClick={handleSubmit}
+              disabled={!isDisabled}
+            >
+              {/* {isDisabled ? "Disabled" : "Enabled"} */}
+              Submit
+            </button>
           </div>
         </div>
       </>
