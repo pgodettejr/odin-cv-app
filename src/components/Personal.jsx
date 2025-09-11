@@ -13,6 +13,20 @@ export default function Personal() {
   const [phoneNum, setPhoneNum] = useState("");
   // const [isDisabled, setIsDisabled] = useState(false); - See ATTEMPT #4
 
+  // TODO: First, commit what we did today (Tuesday 9/9/25) before doing anything else on Thursday 9/11/25
+  
+  // TODO: Need some type of delay to give the user time to type in the text fields of the form elements. Could do setTimeout for each "handle" function, but try to come up with a "helper function" that does the setTimeout for any element that is a text input in any form
+
+  // Example of separate setTimeout code
+
+  // function handleCompanyChange(e) {
+  //   setTimeout(() => {
+  //     setCompany(e.target.value);
+  //   }, 10000);
+  // }
+
+  // TODO: Also, the Edit button doesn't work. At all. Step through the code in DevTools after clicking on it and find out why.
+  
   function handleNameChange(e) {
     setFullName(e.target.value);
   }
@@ -53,26 +67,25 @@ export default function Personal() {
   // }
 
   // ATTEMPT #3: This works as long as we don't return the "PersonalComplete" function and just the raw HTML elements instead, but it auto returns them as soon as the last section is filled out (doesn't stay as form inputs until Submit button is clicked). "Ghetto" solution that we can repeat on the other components if needed (and only have an Edit button if that's the case)
-  // if (fullName !== "" && email !== "" && phoneNum !== "") {
-  //   // PersonalComplete();
-  //   return (
-  //     <div className="completed-personal">
-  //       <h2>Personal Info</h2>
-  //         <div className="full-name">
-  //           <h3>Name</h3>
-  //           <p>{fullName}</p>
-  //         </div>
-  //         <div className="email-address">
-  //           <h3>Email</h3>
-  //           <p>{email}</p>
-  //         </div>
-  //         <div className="tel-phone-num">
-  //           <h3>Phone Number</h3>
-  //           <p>{phoneNum}</p>
-  //         </div>
-  //     </div>
-  //   )
-  // } else {
+  if (fullName !== "" && email !== "" && phoneNum !== "") {
+    return (
+      <div className="completed-personal">
+        <h2>Personal Info</h2>
+        <div className="full-name">
+          <h3>Name</h3>
+          <p>{fullName}</p>
+        </div>
+        <div className="email-address">
+          <h3>Email</h3>
+          <p>{email}</p>
+        </div>
+        <div className="tel-phone-num">
+          <h3>Phone Number</h3>
+          <p>{phoneNum}</p>
+        </div>
+      </div>
+    )
+  } else {
     return (
       <form onSubmit={(e) => e.preventDefault()}>
         <h2>Personal Info</h2>
@@ -90,7 +103,7 @@ export default function Personal() {
         <div className="form-col">
           <label htmlFor="email-address">Email</label>
           <input
-            type={email} // TODO: Check the docs and make sure this syntax is correct
+            type={email}
             name="email-address"
             id="email-address"
             value={email}
@@ -104,7 +117,7 @@ export default function Personal() {
           <label htmlFor="phone-number">Phone Number</label>
           <input
             type="tel"
-            name="phone-number" // TODO: Check the docs and make sure this syntax is correct (and why curly braces around it was wrong)
+            name="phone-number" // TODO: Check the docs and find out why curly braces around it was wrong
             id="phone-number"
             value={phoneNum}
             onChange={handlePhoneChange}
@@ -113,5 +126,5 @@ export default function Personal() {
         </div>
       </form>
     );
-  // }
+  }
 }

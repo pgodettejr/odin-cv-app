@@ -59,26 +59,26 @@ export default function App() {
     setIsDisabled(!isDisabled);
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    // TODO: Test this function out when the form is submitted after adding HTML elements to display each piece of info. Might need to rename startDate and endDate if React doesn't accept "duplicates". Doesn't work with simply values by itself. Need "property: key"?
-    // setSubmitted({
-    //   fullName,
-    //   email,
-    //   phoneNum,
-    //   company,
-    //   position,
-    //   startDate,
-    //   endDate,
-    //   location,
-    //   description,
-    //   school,
-    //   major,
-    // });
-    setSubmitted(true);
-    console.log("The Submit button was clicked and is now disabled");
-    toggleDisabled();
-  }
+  // function handleSubmit(e) {
+  //   e.preventDefault();
+  //   // TODO: Test this function out when the form is submitted after adding HTML elements to display each piece of info. Might need to rename startDate and endDate if React doesn't accept "duplicates". Doesn't work with simply values by itself. Need "property: key"?
+  //   // setSubmitted({
+  //   //   fullName,
+  //   //   email,
+  //   //   phoneNum,
+  //   //   company,
+  //   //   position,
+  //   //   startDate,
+  //   //   endDate,
+  //   //   location,
+  //   //   description,
+  //   //   school,
+  //   //   major,
+  //   // });
+  //   setSubmitted(true);
+  //   console.log("The Submit button was clicked and is now disabled");
+  //   toggleDisabled();
+  // }
 
   function handleEdit(e) {
     e.preventDefault();
@@ -124,16 +124,20 @@ export default function App() {
 
           {/* Having this shows the info but still as "form" elements, not as HTML elements with headings and <p> tags. "Personal" component completely ignores the "if" statement I wrote on it */}
           <Personal /> 
+          <Experience />
+          <Experience />
+          <Education />
+          <Education />
 
-          <h2>Work Experience</h2>
+          {/* <h2>Work Experience</h2>
           <div className="company-1">
             <div className="company-name-1">
               <h3>Company</h3>
-              {/* <p>{Experience.Company}</p> - Even when the "Company" propertyName is capitalized, it still doesn't render on Submit */}
+              <p>{Experience.Company}</p> - Even when the "Company" propertyName is capitalized, it still doesn't render on Submit
             </div>
             <div className="job-position-1">
               <h3>Position</h3>
-              {/* <p>{Experience.Position}</p> - Even when the "Position" propertyName is capitalized, it still doesn't render on Submit */}
+              <p>{Experience.Position}</p> - Even when the "Position" propertyName is capitalized, it still doesn't render on Submit
             </div>
             <div className="date-range-1">
               <h3>Start Date</h3>
@@ -151,9 +155,9 @@ export default function App() {
               <h3>Main Responsibilities</h3>
               <p>{Experience.description}</p>
             </div>
-          </div>
+          </div> */}
           {/* TODO: Hard coding this for now. Test it out by filling out both Work Experience fields, then filling out only one. If it doesn't work, see TODO just below this section  */}
-          <div className="company-2">
+          {/* <div className="company-2">
             <div className="company-name-2">
               <h3>Company</h3>
               <p>{Experience.company}</p>
@@ -178,7 +182,7 @@ export default function App() {
               <h3>Main Responsibilities</h3>
               <p>{Experience.description}</p>
             </div>
-          </div>
+          </div> */}
 
           <div className="form-buttons">
             <button
@@ -190,15 +194,14 @@ export default function App() {
               {/* {isDisabled ? "Disabled" : "Enabled"} */}
               Edit
             </button>
-            <button
+            {/* <button
               type="submit" // Change this back to "button" if it doesn't work?
               id="submitButton"
               onClick={handleSubmit}
               disabled={!isDisabled}
             >
-              {/* {isDisabled ? "Disabled" : "Enabled"} */}
               Submit
-            </button>
+            </button> */}
           </div>
         </div>
       </>
@@ -232,20 +235,19 @@ export default function App() {
               type="button"
               id="editButton"
               onClick={handleEdit}
-              disabled={!isDisabled}
+              // disabled={!isDisabled}
             >
               {/* {isDisabled ? "Disabled" : "Enabled"} */}
               Edit
             </button>
-            <button
+            {/* <button
               type="submit" // Change this back to "button" if it doesn't work?
               id="submitButton"
               onClick={handleSubmit}
               disabled={isDisabled}
             >
-              {/* {isDisabled ? "Disabled" : "Enabled"} */}
               Submit
-            </button>
+            </button> */}
           </div>
         </div>
 
