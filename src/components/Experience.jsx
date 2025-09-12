@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-// TODO: Add "submitted" status as a {prop} in this function, then pass it down to the return statement as a conditional render via if/else statement or ternary operator ( {submitted ? show innerHTML or whatever HTML : form elements} ). See code just under <h1> in the App component as an example of ternary operator rendering the HTML elements upon submission. See Steps 1 and 2 examples on Sharing State Between Components.
+// OPTION: Add "submitted" status as a {prop} in this function, then pass it down to the return statement as a conditional render via if/else statement or ternary operator ( {submitted ? show innerHTML or whatever HTML : form elements} ). See code just under <h1> in the App component as an example of ternary operator rendering the HTML elements upon submission. See Steps 1 and 2 examples on Sharing State Between Components.
 
 export default function Experience() {
   const [company, setCompany] = useState("");
@@ -10,20 +10,6 @@ export default function Experience() {
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
 
-  // TODO: First, commit what we did today (Tuesday 9/9/25) before doing anything else on Thursday 9/11/25
-
-  // TODO: Need some type of delay to give the user time to type in the text fields of the form elements. Could do setTimeout for each "handle" function, but try to come up with a "helper function" that does the setTimeout for any element that is a text input in any form
-
-  // Example of separate setTimeout code
-
-  // function handleCompanyChange(e) {
-  //   setTimeout(() => {
-  //     setCompany(e.target.value);
-  //   }, 10000);
-  // }
-
-  // TODO: Also, the Edit button doesn't work. At all. Step through the code in DevTools after clicking on it and find out why.
-
   function handleCompanyChange(e) {
     setCompany(e.target.value);
   }
@@ -32,7 +18,7 @@ export default function Experience() {
     setPosition(e.target.value);
   }
 
-  // TODO: See if we can put both setStartDate and setEndDate calls under one handleDateChange function
+  // BRANCH: See if we can put both setStartDate and setEndDate calls under one handleDateChange function
   function handleStartDateChange(e) {
     setStartDate(e.target.value);
   }
@@ -83,7 +69,7 @@ export default function Experience() {
     return (
       // Possibly move form over to App.jsx as one form so we don't have multiple forms to submit?
       <form onSubmit={(e) => e.preventDefault()}>
-        <h2>Work Experience</h2>
+        {/* <h2>Work Experience</h2> */}
         <div className="form-grid">
           <label htmlFor="company-name">Company</label>
           <input
@@ -111,7 +97,7 @@ export default function Experience() {
             name="date-range"
             id="date-range"
             value={startDate}
-            onChange={handleStartDateChange} // TODO: Change this to handleDateChange if first TODO above can be accomplished
+            onChange={handleStartDateChange} // BRANCH: Change this to handleDateChange if first BRANCH above can be accomplished
           />
         </div>
 
@@ -122,7 +108,7 @@ export default function Experience() {
             name="date-range"
             id="date-range"
             value={endDate}
-            onChange={handleEndDateChange} // TODO: Change this to handleDateChange if first TODO above can be accomplished
+            onChange={handleEndDateChange} // BRANCH: Change this to handleDateChange if first BRANCH above can be accomplished
           />
         </div>
 

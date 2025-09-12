@@ -13,20 +13,7 @@ export default function Personal() {
   const [phoneNum, setPhoneNum] = useState("");
   // const [isDisabled, setIsDisabled] = useState(false); - See ATTEMPT #4
 
-  // TODO: First, commit what we did today (Tuesday 9/9/25) before doing anything else on Thursday 9/11/25
-  
-  // TODO: Need some type of delay to give the user time to type in the text fields of the form elements. Could do setTimeout for each "handle" function, but try to come up with a "helper function" that does the setTimeout for any element that is a text input in any form
-
-  // Example of separate setTimeout code
-
-  // function handleCompanyChange(e) {
-  //   setTimeout(() => {
-  //     setCompany(e.target.value);
-  //   }, 10000);
-  // }
-
-  // TODO: Also, the Edit button doesn't work. At all. Step through the code in DevTools after clicking on it and find out why.
-  
+  // setTimeout apparently causes all text inputs to not function at all, even after 60000 ms.
   function handleNameChange(e) {
     setFullName(e.target.value);
   }
@@ -67,6 +54,8 @@ export default function Personal() {
   // }
 
   // ATTEMPT #3: This works as long as we don't return the "PersonalComplete" function and just the raw HTML elements instead, but it auto returns them as soon as the last section is filled out (doesn't stay as form inputs until Submit button is clicked). "Ghetto" solution that we can repeat on the other components if needed (and only have an Edit button if that's the case)
+
+  // Adding setTimeout to the returned JSX just returns "123" completed text instead of any form elements
   if (fullName !== "" && email !== "" && phoneNum !== "") {
     return (
       <div className="completed-personal">
