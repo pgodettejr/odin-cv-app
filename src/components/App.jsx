@@ -9,6 +9,8 @@ import viteLogo from '/vite.svg'
 import '../styles/App.css'
 // import { useFormState } from 'react-dom'
 
+// TODO: Should we put all the useState code back under its respective form along with the handle functions and ONLY lift the submitted state up?
+
 // TODO: Refresh/review all React content in TOP from 'Getting Started With React' section up to this project if needed
 
 // Use console.log...a lot (confirm React batching state updates on re-renders)
@@ -46,23 +48,11 @@ export default function App() {
   const [isDisabled, setIsDisabled] = useState(false);
   const [submitted, setSubmitted] = useState(false); // This is for setting the status and converting all the form data to HTML elements when "Submit" is clicked. We could try 'useState({})' if we go with the previous 'setSubmitted' call in the handleSubmit function.
 
-  // TODO: Review "Sharing State Between Components" again and find out why these values are never read despite lifting the state up to App and passing them down as props to each function below
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phoneNum, setPhoneNum] = useState("");
+  // Currently, we can either lift everything up but then the handle functions don't get read in the child functions (e.g.: Personal) or we can keep the useState code in their respective child functions and figure out a different way to render the HTML (without it auto generating to HTML if we do !== conditionals related to empty strings like we had before)
 
-  const [company, setCompany] = useState("");
-  const [position, setPosition] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [jobLocation, setJobLocation] = useState("");
-  const [description, setDescription] = useState("");
-
-  const [school, setSchool] = useState("");
-  const [major, setMajor] = useState("");
-  const [schoolStart, setSchoolStart] = useState("");
-  const [schoolFinish, setSchoolFinish] = useState("");
-  const [schoolLocation, setSchoolLocation] = useState("");
+  // If we lift everything up, it would be for the purpose of writing a "formComplete" function that has all the form elements from the other functions rendered as HTML. We would possibly just have two functions with this version: "Form" for the entire form, not split up into sections, and "Resume" for the completed HTML displayed resume based on what was filled out in the form. We could possibly even just have one "Form" function with a ternary operator inside that displays either the form or the HTML depending on the "submitted" state. See example in "submittedResume" function below for a way to accomplish this. We would need to add "submitted" as a prop to the "Form" component (or pass it to each of the three current components while leaving the respective useStates in each component). On the component(s), when called, should we set up an "onClick" with "setSubmitted(true)"?
+  
+  // If we keep the states in their respective functions, the handle functions work but we would need to...pass the word "props" to each function representing the sections of the form?
 
   // May need this to display submitted data on Submit?
   // const [formData, setFormData] = useState({});
@@ -75,64 +65,6 @@ export default function App() {
 
   function toggleDisabled() {
     setIsDisabled(!isDisabled);
-  }
-
-  function handleNameChange(e) {
-    setFullName(e.target.value);
-  }
-
-  function handleEmailChange(e) {
-    setEmail(e.target.value);
-  }
-
-  function handlePhoneChange(e) {
-    setPhoneNum(e.target.value);
-  }
-
-  function handleCompanyChange(e) {
-    setCompany(e.target.value);
-  }
-
-  function handlePositionChange(e) {
-    setPosition(e.target.value);
-  }
-
-  // TODO: See if we can put both setStartDate and setEndDate calls under one handleDateChange function
-  function handleStartDateChange(e) {
-    setStartDate(e.target.value);
-  }
-
-  function handleEndDateChange(e) {
-    setEndDate(e.target.value);
-  }
-
-  function handleJobLocationChange(e) {
-    setJobLocation(e.target.value);
-  }
-
-  function handleDescriptionChange(e) {
-    setDescription(e.target.value);
-  }
-
-  function handleSchoolChange(e) {
-    setSchool(e.target.value);
-  }
-
-  function handleMajorChange(e) {
-    setMajor(e.target.value);
-  }
-
-  // TODO: See if we can put both setStartDate and setEndDate calls under one handleDateChange function
-  function handleSchoolStartChange(e) {
-    setSchoolStart(e.target.value);
-  }
-
-  function handleSchoolFinishChange(e) {
-    setSchoolFinish(e.target.value);
-  }
-
-  function handleSchoolLocationChange(e) {
-    setSchoolLocation(e.target.value);
   }
 
   function handleSubmit(e) {
@@ -154,6 +86,7 @@ export default function App() {
     setSubmitted(true);
     console.log("The Submit button was clicked and is now disabled");
     toggleDisabled();
+    // <Form />
   }
 
   // TODO: The Edit button doesn't work. At all. Step through the code in DevTools after clicking on it and find out why.
@@ -165,192 +98,193 @@ export default function App() {
   }
 
   // DISPLAY all of these elements in the middle of the webpage
-  if (submitted) {
-    return (
-      <>
-        <h1>CV/Resumé App</h1>
+  // function submittedResume() {
+  //   if (submitted) {
+  //     return (
+  //       <>
+  //         <h1>CV/Resumé App</h1>
 
-        {/* TODO:
-        HTML elements for Personal, Experience and Education components go here. InnerHTML under each component called? Or something else?
-        We might need this under the OTHER return statement below instead of here. Or remove the form elements from the other components (see other modules) */}
-        {/* Example for displaying form data */}
+  //         {/* TODO:
+  //         HTML elements for Personal, Experience and Education components go here. InnerHTML under each component called? Or something else?
+  //         We might need this under the OTHER return statement below instead of here. Or remove the form elements from the other components (see other modules) */}
+  //         {/* Example for displaying form data */}
 
-        {/* {submitted && (
-           <div>
-             <h2>Submitted Information:</h2>
-             <p><strong>Name:</strong> {submitted.fullName}</p>
-             <p><strong>Email:</strong> {submitted.email}</p>
-           </div>
-         )} */}
-        {/* TODO: only the headings are showing, not the actual info entered on the form via the <p> elements. Dot notation is wrong. Fix */}
-        {/* Still might need to change the classNames to just one name for styling instead of each div having its own separate classNames */}
-        <div className="completed-form">
-          {/* <h2>Personal Info</h2>
-          <div className="full-name">
-            <h3>Name</h3>
-            <p>{Personal.fullName}</p>
-          </div>
-          <div className="email-address">
-            <h3>Email</h3>
-            <p>{Personal.email}</p>
-          </div>
-          <div className="tel-phone-num">
-            <h3>Phone Number</h3>
-            <p>{Personal.phoneNum}</p>
-          </div> */}
+  //         {/* {submitted ? (
+  //           <div>
+  //             <h2>Submitted Information:</h2>
+  //             <p><strong>Name:</strong> {submitted.fullName}</p>
+  //             <p><strong>Email:</strong> {submitted.email}</p>
+  //           </div>
+  //         ) : (
+  //          form elements go here
+  //          )} */}
 
-          {/* Having this shows the info but still as "form" elements, not as HTML elements with headings and <p> tags. "Personal" component completely ignores the "if" statement I wrote on it */}
-          <Personal /> 
-          <Experience />
-          <Experience />
-          <Education />
-          <Education />
+  //         {/* TODO: only the headings are showing, not the actual info entered on the form via the <p> elements. Dot notation is wrong. Fix */}
+  //         {/* Still might need to change the classNames to just one name for styling instead of each div having its own separate classNames */}
+  //         <div className="completed-form">
+  //           <h2>Personal Info</h2>
+  //           <div className="full-name">
+  //             <h3>Name</h3>
+  //             <p>{fullName}</p>
+  //           </div>
+  //           <div className="email-address">
+  //             <h3>Email</h3>
+  //             <p>{email}</p>
+  //           </div>
+  //           <div className="tel-phone-num">
+  //             <h3>Phone Number</h3>
+  //             <p>{phoneNum}</p>
+  //           </div>
 
-          {/* <h2>Work Experience</h2>
-          <div className="company-1">
-            <div className="company-name-1">
-              <h3>Company</h3>
-              <p>{Experience.Company}</p> - Even when the "Company" propertyName is capitalized, it still doesn't render on Submit
-            </div>
-            <div className="job-position-1">
-              <h3>Position</h3>
-              <p>{Experience.Position}</p> - Even when the "Position" propertyName is capitalized, it still doesn't render on Submit
-            </div>
-            <div className="date-range-1">
-              <h3>Start Date</h3>
-              <p>{Experience.startDate}</p>
-            </div>
-            <div className="date-range-1">
-              <h3>End Date</h3>
-              <p>{Experience.endDate}</p>
-            </div>
-            <div className="location-1">
-              <h3>Location</h3>
-              <p>{Experience.location}</p>
-            </div>
-            <div className="description-1">
-              <h3>Main Responsibilities</h3>
-              <p>{Experience.description}</p>
-            </div>
-          </div> */}
-          {/* TODO: Hard coding this for now. Test it out by filling out both Work Experience fields, then filling out only one. If it doesn't work, see TODO just below this section  */}
-          {/* <div className="company-2">
-            <div className="company-name-2">
-              <h3>Company</h3>
-              <p>{Experience.company}</p>
-            </div>
-            <div className="job-position-2">
-              <h3>Position</h3>
-              <p>{Experience.position}</p>
-            </div>
-            <div className="date-range-2">
-              <h3>Start Date</h3>
-              <p>{Experience.startDate}</p>
-            </div>
-            <div className="date-range-2">
-              <h3>End Date</h3>
-              <p>{Experience.endDate}</p>
-            </div>
-            <div className="location-2">
-              <h3>Location</h3>
-              <p>{Experience.location}</p>
-            </div>
-            <div className="description-2">
-              <h3>Main Responsibilities</h3>
-              <p>{Experience.description}</p>
-            </div>
-          </div> */}
+  //           <h2>Work Experience</h2>
+  //           <div className="company-1">
+  //             <div className="company-name-1">
+  //               <h3>Company</h3>
+  //               <p>{Experience.Company}</p> - Even when the "Company" propertyName is capitalized, it still doesn't render on Submit
+  //             </div>
+  //             <div className="job-position-1">
+  //               <h3>Position</h3>
+  //               <p>{Experience.Position}</p> - Even when the "Position" propertyName is capitalized, it still doesn't render on Submit
+  //             </div>
+  //             <div className="date-range-1">
+  //               <h3>Start Date</h3>
+  //               <p>{Experience.startDate}</p>
+  //             </div>
+  //             <div className="date-range-1">
+  //               <h3>End Date</h3>
+  //               <p>{Experience.endDate}</p>
+  //             </div>
+  //             <div className="location-1">
+  //               <h3>Location</h3>
+  //               <p>{Experience.location}</p>
+  //             </div>
+  //             <div className="description-1">
+  //               <h3>Main Responsibilities</h3>
+  //               <p>{Experience.description}</p>
+  //             </div>
+  //           </div>
+  //           {/* TODO: Hard coding this for now. Test it out by filling out both Work Experience fields, then filling out only one. If it doesn't work, see TODO just below this section  */}
+  //           <div className="company-2">
+  //             <div className="company-name-2">
+  //               <h3>Company</h3>
+  //               <p>{Experience.company}</p>
+  //             </div>
+  //             <div className="job-position-2">
+  //               <h3>Position</h3>
+  //               <p>{Experience.position}</p>
+  //             </div>
+  //             <div className="date-range-2">
+  //               <h3>Start Date</h3>
+  //               <p>{Experience.startDate}</p>
+  //             </div>
+  //             <div className="date-range-2">
+  //               <h3>End Date</h3>
+  //               <p>{Experience.endDate}</p>
+  //             </div>
+  //             <div className="location-2">
+  //               <h3>Location</h3>
+  //               <p>{Experience.location}</p>
+  //             </div>
+  //             <div className="description-2">
+  //               <h3>Main Responsibilities</h3>
+  //               <p>{Experience.description}</p>
+  //             </div>
+  //           </div>
 
-          <div className="form-buttons">
-            <button
-              type="button"
-              id="editButton"
-              onClick={handleEdit}
-              disabled={isDisabled}
-            >
-              {/* {isDisabled ? "Disabled" : "Enabled"} */}
-              Edit
-            </button>
-            <button
-              type="submit" // Change this back to "button" if it doesn't work?
-              id="submitButton"
-              onClick={handleSubmit}
-              disabled={!isDisabled}
-            >
-              Submit
-            </button>
-          </div>
-        </div>
-      </>
+  //           <div className="form-buttons">
+  //             <button
+  //               type="button"
+  //               id="editButton"
+  //               onClick={handleEdit}
+  //               disabled={isDisabled}
+  //             >
+  //               {/* {isDisabled ? "Disabled" : "Enabled"} */}
+  //               Edit
+  //             </button>
+  //             <button
+  //               type="submit" // Change this back to "button" if it doesn't work?
+  //               id="submitButton"
+  //               onClick={handleSubmit}
+  //               disabled={!isDisabled}
+  //             >
+  //               Submit
+  //             </button>
+  //           </div>
+  //         </div>
+  //       </>
 
-      // TODO: Implement a "forEach" method or, preferably, a "map" method for each Work Experience and Education section filled out by the user? Either way, we need to create an array (with objects?).
-      // We COULD grab each "input" element ("label" elements too?) via DOM manipulation through querySelectorAll, take that NodeList and use forEach to show the filled out info on the submitted UI
-      // Look at our To-Do List project for any other ideas
+  //       // TODO: Implement a "forEach" method or, preferably, a "map" method for each Work Experience and Education section filled out by the user? Either way, we need to create an array (with objects?).
+  //       // We COULD grab each "input" element ("label" elements too?) via DOM manipulation through querySelectorAll, take that NodeList and use forEach to show the filled out info on the submitted UI
+  //       // Look at our To-Do List project for any other ideas
 
-      // <form onSubmit={((e) => e.preventDefault(), setSubmitted(true))}>
-      //   <Personal />
-      //   <Experience />
-      //   <Experience />
-      //   <Education />
-      //   <Education />
-      // </form>
-    );
-  } else {
-    return (
-      <>
-        <h1>CV/Resumé App</h1>
-        <div className="App">
-          <Personal title="Personal Info" fullName={""} email={""} phoneNum={""} />
-          <h2>Work Experience</h2>
-          <Experience />
-          <Experience />
-          <h2>Education</h2>
-          <Education />
-          <Education />
-          <div className="form-buttons">
-            <button
-              type="button"
-              id="editButton"
-              onClick={handleEdit}
-              // disabled={!isDisabled}
-            >
-              {/* {isDisabled ? "Disabled" : "Enabled"} */}
-              Edit
-            </button>
-            {/* <button
-              type="submit" // Change this back to "button" if it doesn't work?
-              id="submitButton"
-              onClick={handleSubmit}
-              disabled={isDisabled}
-            >
-              Submit
-            </button> */}
-          </div>
-        </div>
+  //       // <form onSubmit={((e) => e.preventDefault(), setSubmitted(true))}>
+  //       //   <Personal />
+  //       //   <Experience />
+  //       //   <Experience />
+  //       //   <Education />
+  //       //   <Education />
+  //       // </form>
+  //     );
+  //   }
+  // }
 
-        <div>
-          <a href="https://vite.dev" target="_blank">
-            <img src={viteLogo} className="logo" alt="Vite logo" />
-          </a>
-          <a href="https://react.dev" target="_blank">
-            <img src={reactLogo} className="logo react" alt="React logo" />
-          </a>
-        </div>
-        <h1>Vite + React</h1>
-        <div className="card">
-          <button onClick={() => setCount((count) => count + 1)}>
-            count is {count}
+  return (
+    <>
+      <h1>CV/Resumé App</h1>
+      <div className="App">
+        <Form />
+        {/* <h2>Personal Info</h2>
+        <Personal />
+        <h2>Work Experience</h2>
+        <Experience />
+        <Experience />
+        <h2>Education</h2>
+        <Education />
+        <Education />
+        <div className="form-buttons">
+          <button
+            type="button"
+            id="editButton"
+            onClick={handleEdit}
+            // disabled={!isDisabled}
+          >
+            {/* {isDisabled ? "Disabled" : "Enabled"} */}
+            {/* Edit
           </button>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test HMR
-          </p>
-        </div>
-        <p className="read-the-docs">
-          Click on the Vite and React logos to learn more
+          <button
+            type="submit" // Change this back to "button" if it doesn't work?
+            id="submitButton"
+            onClick={handleSubmit}
+            disabled={isDisabled}
+          >
+            Submit
+          </button> */}
+        {/* </div> */}
+      </div>
+
+      <div>
+        <a href="https://vite.dev" target="_blank">
+          <img src={viteLogo} className="logo" alt="Vite logo" />
+        </a>
+        <a href="https://react.dev" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a>
+      </div>
+      <h1>Vite + React</h1>
+      <div className="card">
+        <button onClick={() => setCount((count) => count + 1)}>
+          count is {count}
+        </button>
+        <p>
+          Edit <code>src/App.jsx</code> and save to test HMR
         </p>
-      </>
-    );
-  }
+      </div>
+      <p className="read-the-docs">
+        Click on the Vite and React logos to learn more
+      </p>
+    </>
+  );
+
 
   // Possibly combine these functions into one "Form (function)" so we don't have multiple forms to submit?
 
@@ -360,187 +294,827 @@ export default function App() {
 
   // const submitted = App.Submitted; - See comment on App import above
 
-  // TODO: Pass "onChange" as a prop, then add "onChange" as a prop to Personal when called above?
-  function Personal({ fullName, email, phoneNum }) {
-    // const [isDisabled, setIsDisabled] = useState(false); - See ATTEMPT #4
+  function Form({ submitted }) {
+    const [fullName, setFullName] = useState("");
+    const [email, setEmail] = useState("");
+    const [phoneNum, setPhoneNum] = useState("");
 
-    // setTimeout apparently causes all text inputs to not function at all, even after 60000 ms.
+    const [company, setCompany] = useState("");
+    const [position, setPosition] = useState("");
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+    const [jobLocation, setJobLocation] = useState("");
+    const [description, setDescription] = useState("");
 
-    // TODO: This conditional is currently being completely ignored and the form elements still render when this component is called in App even after submitting the resume via the Submit button. 
+    const [school, setSchool] = useState("");
+    const [major, setMajor] = useState("");
+    const [schoolStart, setSchoolStart] = useState("");
+    const [schoolFinish, setSchoolFinish] = useState("");
+    const [schoolLocation, setSchoolLocation] = useState("");
 
-    // DevTools shows that the values entered into the inputs are being updated but "submitted" is still showing 'undefined' despite passing it as a prop above. Likely because this function is in a different component from where "submitted" IS defined (in App component.)
+    function handleNameChange(e) {
+      setFullName(e.target.value);
+    }
 
-    // ATTEMPT #2: When we create a separate function showing the completed Personal info section showing the values of the input fields and set it up similar to the Panel function in step 2 example of "Sharing State Between Components" React doc, all of the Personal info that's filled in disappears from the app once that section has all input values filled in and the function is run in the conditional "if/else" statement below. The HTML elements from this function aren't returning
+    function handleEmailChange(e) {
+      setEmail(e.target.value);
+    }
 
-    // ATTEMPT #4: Run it again via 'onSubmit' in the form since 'e.preventDefault' is called on handleSubmit in the App module anyway. Tried to add separate Edit and Submit buttons just for this section since onSubmit alone wouldn't get this section to show HTML elements, but it didn't work
-    // function personalComplete() {
-    //   return (
-    //     <div className="completed-personal">
-    //       <h2>Personal Info</h2>
-    //         <div className="full-name">
-    //           <h3>Name</h3>
-    //           <p>{fullName}</p>
-    //         </div>
-    //         <div className="email-address">
-    //           <h3>Email</h3>
-    //           <p>{email}</p>
-    //         </div>
-    //         <div className="tel-phone-num">
-    //           <h3>Phone Number</h3>
-    //           <p>{phoneNum}</p>
-    //         </div>
-    //     </div>
-    //   )
-    // }
+    function handlePhoneChange(e) {
+      setPhoneNum(e.target.value);
+    }
 
-    // ATTEMPT #3: This works as long as we don't return the "PersonalComplete" function and just the raw HTML elements instead, but it auto returns them as soon as the last section is filled out (doesn't stay as form inputs until Submit button is clicked). "Ghetto" solution that we can repeat on the other components if needed (and only have an Edit button if that's the case)
+    function handleCompanyChange(e) {
+      setCompany(e.target.value);
+    }
 
-    // Adding setTimeout to the returned JSX just returns "123" completed text instead of any form elements
-    //   if (fullName !== "" && email !== "" && phoneNum !== "") {
-    //     return (
-    //       <div className="completed-personal">
-    //         <h2>Personal Info</h2>
-    //         <div className="full-name">
-    //           <h3>Name</h3>
-    //           <p>{fullName}</p>
-    //         </div>
-    //         <div className="email-address">
-    //           <h3>Email</h3>
-    //           <p>{email}</p>
-    //         </div>
-    //         <div className="tel-phone-num">
-    //           <h3>Phone Number</h3>
-    //           <p>{phoneNum}</p>
-    //         </div>
-    //       </div>
-    //     )
-    //   } else {
-    //     return (
-    //       <form onSubmit={(e) => e.preventDefault()}>
-    //         <h2>Personal Info</h2>
-    //         <div className="form-col">
-    //           <label htmlFor="full-name">Full Name</label>
-    //           <input
-    //             name="full-name"
-    //             id="full-name"
-    //             value={fullName}
-    //             onChange={handleNameChange}
-    //             required
-    //           />
-    //         </div>
+    function handlePositionChange(e) {
+      setPosition(e.target.value);
+    }
 
-    //         <div className="form-col">
-    //           <label htmlFor="email-address">Email</label>
-    //           <input
-    //             type={email}
-    //             name="email-address"
-    //             id="email-address"
-    //             value={email}
-    //             onChange={handleEmailChange}
-    //             placeholder="yourname@example.com"
-    //             required
-    //           />
-    //         </div>
+    // TODO: See if we can put both setStartDate and setEndDate calls under one handleDateChange function
+    function handleStartDateChange(e) {
+      setStartDate(e.target.value);
+    }
 
-    //         <div className="form-col">
-    //           <label htmlFor="phone-number">Phone Number</label>
-    //           <input
-    //             type="tel"
-    //             name="phone-number" // TODO: Check the docs and find out why curly braces around it was wrong
-    //             id="phone-number"
-    //             value={phoneNum}
-    //             onChange={handlePhoneChange}
-    //             required
-    //           />
-    //         </div>
-    //       </form>
-    //     );
-    //   }
+    function handleEndDateChange(e) {
+      setEndDate(e.target.value);
+    }
+
+    function handleJobLocationChange(e) {
+      setJobLocation(e.target.value);
+    }
+
+    function handleDescriptionChange(e) {
+      setDescription(e.target.value);
+    }
+
+    function handleSchoolChange(e) {
+      setSchool(e.target.value);
+    }
+
+    function handleMajorChange(e) {
+      setMajor(e.target.value);
+    }
+
+    // TODO: See if we can put both setStartDate and setEndDate calls under one handleDateChange function
+    function handleSchoolStartChange(e) {
+      setSchoolStart(e.target.value);
+    }
+
+    function handleSchoolFinishChange(e) {
+      setSchoolFinish(e.target.value);
+    }
+
+    function handleSchoolLocationChange(e) {
+      setSchoolLocation(e.target.value);
+    }
+
     return (
-      <form onSubmit={(e) => e.preventDefault()}>
-        <div className="form-col">
-          <label htmlFor="full-name">Full Name</label>
-          <input
-            name="full-name"
-            id="full-name"
-            value={fullName}
-            onChange={handleNameChange}
-            required
-          />
-        </div>
+      <>
+        {submitted ? (
+            <div>
+              <div className="completed-personal">
+                <h2>Personal Info</h2>
+                <div className="full-name">
+                  <h3>Name</h3>
+                  <p>{fullName}</p>
+                </div>
+                <div className="email-address">
+                  <h3>Email</h3>
+                  <p>{email}</p>
+                </div>
+                <div className="tel-phone-num">
+                  <h3>Phone Number</h3>
+                  <p>{phoneNum}</p>
+                </div>
+              </div>
 
-        <div className="form-col">
-          <label htmlFor="email-address">Email</label>
-          <input
-            type={email} // TODO: Check the docs and make sure this syntax is correct
-            name="email-address"
-            id="email-address"
-            value={email}
-            onChange={handleEmailChange}
-            placeholder="yourname@example.com"
-            required
-          />
-        </div>
+              <div className="completed-experience">
+                <h2>Work Experience</h2>
+                <div className="company-name-1">
+                  <h3>Company</h3>
+                  <p>{company}</p>
+                </div>
+                <div className="job-position-1">
+                  <h3>Position</h3>
+                  <p>{position}</p>
+                </div>
+                <div className="date-range-1">
+                  <h3>Start Date</h3>
+                  <p>{startDate}</p>
+                </div>
+                <div className="date-range-1">
+                  <h3>End Date</h3>
+                  <p>{endDate}</p>
+                </div>
+                <div className="job-location-1">
+                  <h3>Location</h3>
+                  <p>{location}</p>
+                </div>
+                <div className="job-duties-1">
+                  <h3>Main Responsibilities</h3>
+                  <p>{description}</p>
+                </div>
 
-        <div className="form-col">
-          <label htmlFor="phone-number">Phone Number</label>
-          <input
-            type="tel" // TODO: Check the docs and make sure this syntax is correct (and why curly braces isn't correct)
-            name="phone-number"
-            id="phone-number"
-            value={phoneNum}
-            onChange={handlePhoneChange}
-            required
-          />
-        </div>
-      </form>
+                <div className="company-name-2">
+                  <h3>Company</h3>
+                  <p>{company}</p>
+                </div>
+                <div className="job-position-2">
+                  <h3>Position</h3>
+                  <p>{position}</p>
+                </div>
+                <div className="date-range-2">
+                  <h3>Start Date</h3>
+                  <p>{startDate}</p>
+                </div>
+                <div className="date-range-2">
+                  <h3>End Date</h3>
+                  <p>{endDate}</p>
+                </div>
+                <div className="job-location-2">
+                  <h3>Location</h3>
+                  <p>{location}</p>
+                </div>
+                <div className="job-duties-2">
+                  <h3>Main Responsibilities</h3>
+                  <p>{description}</p>
+                </div>
+              </div>
+
+              <div className="completed-education">
+                <h2>Education</h2>
+                <div className="school-name-1">
+                  <h3>Institution</h3>
+                  <p>{school}</p>
+                </div>
+                <div className="study-major-1">
+                  <h3>Study/Major</h3>
+                  <p>{major}</p>
+                </div>
+                <div className="date-range-1">
+                  <h3>Start Date</h3>
+                  <p>{schoolStart}</p>
+                </div>
+                <div className="date-range-1">
+                  <h3>End Date</h3>
+                  <p>{schoolFinish}</p>
+                </div>
+                <div className="school-location-1">
+                  <h3>Location</h3>
+                  <p>{schoolLocation}</p>
+                </div>
+
+                <div className="school-name-2">
+                  <h3>Institution</h3>
+                  <p>{school}</p>
+                </div>
+                <div className="study-major-2">
+                  <h3>Study/Major</h3>
+                  <p>{major}</p>
+                </div>
+                <div className="date-range-2">
+                  <h3>Start Date</h3>
+                  <p>{schoolStart}</p>
+                </div>
+                <div className="date-range-2">
+                  <h3>End Date</h3>
+                  <p>{schoolFinish}</p>
+                </div>
+                <div className="school-location-2">
+                  <h3>Location</h3>
+                  <p>{schoolLocation}</p>
+                </div>
+              </div>
+
+              <div className="form-buttons">
+                <button
+                  type="button"
+                  id="editButton"
+                  onClick={handleEdit}
+                  disabled={!isDisabled}
+                >
+                  {/* {isDisabled ? "Disabled" : "Enabled"} */}
+                  Edit
+                </button>
+                <button
+                  type="submit" // Change this back to "button" if it doesn't work?
+                  id="submitButton"
+                  onClick={handleSubmit}
+                  disabled={isDisabled}
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          ) : (
+          <form onSubmit={(e) => e.preventDefault()}>
+            <h2>Personal Info</h2>
+            <div className="form-col">
+              <label htmlFor="full-name">Full Name</label>
+              <input
+                name="full-name"
+                id="full-name"
+                value={fullName}
+                onChange={handleNameChange}
+                required
+              />
+            </div>
+
+            <div className="form-col">
+              <label htmlFor="email-address">Email</label>
+              <input
+                type={email} // TODO: Check the docs and make sure this syntax is correct
+                name="email-address"
+                id="email-address"
+                value={email}
+                onChange={handleEmailChange}
+                placeholder="yourname@example.com"
+                required
+              />
+            </div>
+
+            <div className="form-col">
+              <label htmlFor="phone-number">Phone Number</label>
+              <input
+                type="tel" // TODO: Check the docs and make sure this syntax is correct (and why curly braces isn't correct)
+                name="phone-number"
+                id="phone-number"
+                value={phoneNum}
+                onChange={handlePhoneChange}
+                required
+              />
+            </div>
+
+            <h2>Work Experience</h2>
+            <div className="form-grid">
+              <label htmlFor="company-name-1">Company</label>
+              <input
+                name="company-name-1"
+                id="company-name-1"
+                value={company}
+                onChange={handleCompanyChange}
+              />
+            </div>
+
+            <div className="form-grid">
+              <label htmlFor="job-position-1">Position</label>
+              <input
+                name="job-position-1"
+                id="job-position-1"
+                value={position}
+                onChange={handlePositionChange}
+              />
+            </div>
+
+            <div className="form-grid">
+              <label htmlFor="date-range-1">Start Date</label>
+              <input
+                type="date" // TODO: Check the docs and make sure this syntax is correct (and why curly braces is not correct)
+                name="date-range-1"
+                id="date-range-1"
+                value={startDate}
+                onChange={handleStartDateChange} // TODO: Change this to handleDateChange if first TODO above can be accomplished
+              />
+            </div>
+
+            <div className="form-grid">
+              <label htmlFor="date-range-1">End Date</label>
+              <input
+                type="date" // TODO: Check the docs and make sure this syntax is correct (and why curly braces is not correct)
+                name="date-range-1"
+                id="date-range-1"
+                value={endDate}
+                onChange={handleEndDateChange} // TODO: Change this to handleDateChange if first TODO above can be accomplished
+              />
+            </div>
+
+            <div className="form-grid">
+              <label htmlFor="job-location-1">Location</label>
+              <input
+                name="job-location-1"
+                id="job-location-1"
+                value={jobLocation}
+                onChange={handleJobLocationChange}
+              />
+            </div>
+
+            <div className="form-grid">
+              <label htmlFor="job-duties-1">Main Responsibilities</label>
+              <textarea
+                name="job-duties-1"
+                id="job-duties-1"
+                rows={10} // TODO: See if the rows/cols show up when textarea is under curly braces
+                cols={60}
+                value={description}
+                onChange={handleDescriptionChange}
+              />
+            </div>
+
+            <div className="form-grid">
+              <label htmlFor="company-name-2">Company</label>
+              <input
+                name="company-name-2"
+                id="company-name-2"
+                value={company}
+                onChange={handleCompanyChange}
+              />
+            </div>
+
+            <div className="form-grid">
+              <label htmlFor="job-position-2">Position</label>
+              <input
+                name="job-position-2"
+                id="job-position-2"
+                value={position}
+                onChange={handlePositionChange}
+              />
+            </div>
+
+            <div className="form-grid">
+              <label htmlFor="date-range-2">Start Date</label>
+              <input
+                type="date" // TODO: Check the docs and make sure this syntax is correct (and why curly braces is not correct)
+                name="date-range-2"
+                id="date-range-2"
+                value={startDate}
+                onChange={handleStartDateChange} // TODO: Change this to handleDateChange if first TODO above can be accomplished
+              />
+            </div>
+
+            <div className="form-grid">
+              <label htmlFor="date-range-2">End Date</label>
+              <input
+                type="date" // TODO: Check the docs and make sure this syntax is correct (and why curly braces is not correct)
+                name="date-range-2"
+                id="date-range-2"
+                value={endDate}
+                onChange={handleEndDateChange} // TODO: Change this to handleDateChange if first TODO above can be accomplished
+              />
+            </div>
+
+            <div className="form-grid">
+              <label htmlFor="job-location-2">Location</label>
+              <input
+                name="job-location-2"
+                id="job-location-2"
+                value={jobLocation}
+                onChange={handleJobLocationChange}
+              />
+            </div>
+
+            <div className="form-grid">
+              <label htmlFor="job-duties-2">Main Responsibilities</label>
+              <textarea
+                name="job-duties-2"
+                id="job-duties-2"
+                rows={10} // TODO: See if the rows/cols show up when textarea is under curly braces
+                cols={60}
+                value={description}
+                onChange={handleDescriptionChange}
+              />
+            </div>
+
+            <h2>Education</h2>
+            <div className="form-grid">
+              <label htmlFor="school-name-1">Institution</label>
+              <input
+                name="school-name-1"
+                id="school-name-1"
+                value={school}
+                onChange={handleSchoolChange}
+              />
+            </div>
+
+            <div className="form-grid">
+              <label htmlFor="study-major-1">Title of Study/Major</label>
+              <input
+                name="study-major-1"
+                id="study-major-1"
+                value={major}
+                onChange={handleMajorChange}
+              />
+            </div>
+
+            <div className="form-grid">
+              <label htmlFor="date-range-1">Start Date</label>
+              <input
+                type="date" // TODO: Check the docs and make sure this syntax is correct (and why curly braces is not correct)
+                name="date-range-1"
+                id="date-range-1"
+                value={schoolStart}
+                onChange={handleSchoolStartChange} // TODO: Change this to handleDateChange if first TODO above can be accomplished
+              />
+            </div>
+
+            <div className="form-grid">
+              <label htmlFor="date-range-1">End Date</label>
+              <input
+                type="date" // TODO: Check the docs and make sure this syntax is correct (and why curly braces is not correct)
+                name="date-range-1"
+                id="date-range-1"
+                value={schoolFinish}
+                onChange={handleSchoolFinishChange} // TODO: Change this to handleDateChange if first TODO above can be accomplished
+              />
+            </div>
+
+            <div className="form-grid">
+              <label htmlFor="school-location-1">Location</label>
+              <input
+                name="school-location-1"
+                id="school-location-1"
+                value={schoolLocation}
+                onChange={handleSchoolLocationChange}
+              />
+            </div>
+
+            <div className="form-grid">
+              <label htmlFor="school-name-2">Institution</label>
+              <input
+                name="school-name-2"
+                id="school-name-2"
+                value={school}
+                onChange={handleSchoolChange}
+              />
+            </div>
+
+            <div className="form-grid">
+              <label htmlFor="study-major-2">Title of Study/Major</label>
+              <input
+                name="study-major-2"
+                id="study-major-2"
+                value={major}
+                onChange={handleMajorChange}
+              />
+            </div>
+
+            <div className="form-grid">
+              <label htmlFor="date-range-2">Start Date</label>
+              <input
+                type="date" // TODO: Check the docs and make sure this syntax is correct (and why curly braces is not correct)
+                name="date-range-2"
+                id="date-range-2"
+                value={schoolStart}
+                onChange={handleSchoolStartChange} // TODO: Change this to handleDateChange if first TODO above can be accomplished
+              />
+            </div>
+
+            <div className="form-grid">
+              <label htmlFor="date-range-2">End Date</label>
+              <input
+                type="date" // TODO: Check the docs and make sure this syntax is correct (and why curly braces is not correct)
+                name="date-range-2"
+                id="date-range-2"
+                value={schoolFinish}
+                onChange={handleSchoolFinishChange} // TODO: Change this to handleDateChange if first TODO above can be accomplished
+              />
+            </div>
+
+            <div className="form-grid">
+              <label htmlFor="school-location-2">Location</label>
+              <input
+                name="school-location-2"
+                id="school-location-2"
+                value={schoolLocation}
+                onChange={handleSchoolLocationChange}
+              />
+            </div>
+
+            <div className="form-buttons">
+              <button
+                type="button"
+                id="editButton"
+                onClick={handleEdit}
+                disabled={isDisabled}
+              >
+                {/* {isDisabled ? "Disabled" : "Enabled"} */}
+                Edit
+              </button>
+              <button
+                type="submit" // Change this back to "button" if it doesn't work?
+                id="submitButton"
+                onClick={handleSubmit}
+                disabled={!isDisabled}
+              >
+                Submit
+              </button>
+            </div>
+          </form>
+        )}
+      </>
     );
   }
+
+  // TODO: Pass "onChange" as a prop, then add "onChange" as a prop to Personal when called above?
+  // function Personal({submitted}) {
+  //   // const [isDisabled, setIsDisabled] = useState(false); - See ATTEMPT #4
+
+  //   // setTimeout apparently causes all text inputs to not function at all, even after 60000 ms.
+
+  //   const [fullName, setFullName] = useState("");
+  //   const [email, setEmail] = useState("");
+  //   const [phoneNum, setPhoneNum] = useState("");
+
+  //   function handleNameChange(e) {
+  //     setFullName(e.target.value);
+  //   }
+
+  //   function handleEmailChange(e) {
+  //     setEmail(e.target.value);
+  //   }
+
+  //   function handlePhoneChange(e) {
+  //     setPhoneNum(e.target.value);
+  //   }
+
+  //   // TODO: This conditional is currently being completely ignored and the form elements still render when this component is called in App even after submitting the resume via the Submit button. 
+
+  //   // DevTools shows that the values entered into the inputs are being updated but "submitted" is still showing 'undefined' despite passing it as a prop above. Likely because this function is in a different component from where "submitted" IS defined (in App component.)
+
+  //   // ATTEMPT #2: When we create a separate function showing the completed Personal info section showing the values of the input fields and set it up similar to the Panel function in step 2 example of "Sharing State Between Components" React doc, all of the Personal info that's filled in disappears from the app once that section has all input values filled in and the function is run in the conditional "if/else" statement below. The HTML elements from this function aren't returning
+
+  //   // ATTEMPT #4: Run it again via 'onSubmit' in the form since 'e.preventDefault' is called on handleSubmit in the App module anyway. Tried to add separate Edit and Submit buttons just for this section since onSubmit alone wouldn't get this section to show HTML elements, but it didn't work
+  //   // function personalComplete() {
+  //   //   return (
+  //   //     <div className="completed-personal">
+  //   //       <h2>Personal Info</h2>
+  //   //         <div className="full-name">
+  //   //           <h3>Name</h3>
+  //   //           <p>{fullName}</p>
+  //   //         </div>
+  //   //         <div className="email-address">
+  //   //           <h3>Email</h3>
+  //   //           <p>{email}</p>
+  //   //         </div>
+  //   //         <div className="tel-phone-num">
+  //   //           <h3>Phone Number</h3>
+  //   //           <p>{phoneNum}</p>
+  //   //         </div>
+  //   //     </div>
+  //   //   )
+  //   // }
+
+  //   // ATTEMPT #3: This works as long as we don't return the "PersonalComplete" function and just the raw HTML elements instead, but it auto returns them as soon as the last section is filled out (doesn't stay as form inputs until Submit button is clicked). "Ghetto" solution that we can repeat on the other components if needed (and only have an Edit button if that's the case)
+
+  //   // Adding setTimeout to the returned JSX just returns "123" completed text instead of any form elements
+  //   //   if (fullName !== "" && email !== "" && phoneNum !== "") {
+  //   //     return (
+  //   //       <div className="completed-personal">
+  //   //         <h2>Personal Info</h2>
+  //   //         <div className="full-name">
+  //   //           <h3>Name</h3>
+  //   //           <p>{fullName}</p>
+  //   //         </div>
+  //   //         <div className="email-address">
+  //   //           <h3>Email</h3>
+  //   //           <p>{email}</p>
+  //   //         </div>
+  //   //         <div className="tel-phone-num">
+  //   //           <h3>Phone Number</h3>
+  //   //           <p>{phoneNum}</p>
+  //   //         </div>
+  //   //       </div>
+  //   //     )
+  //   //   } else {
+  //   //     return (
+  //   //       <form onSubmit={(e) => e.preventDefault()}>
+  //   //         <h2>Personal Info</h2>
+  //   //         <div className="form-col">
+  //   //           <label htmlFor="full-name">Full Name</label>
+  //   //           <input
+  //   //             name="full-name"
+  //   //             id="full-name"
+  //   //             value={fullName}
+  //   //             onChange={handleNameChange}
+  //   //             required
+  //   //           />
+  //   //         </div>
+
+  //   //         <div className="form-col">
+  //   //           <label htmlFor="email-address">Email</label>
+  //   //           <input
+  //   //             type={email}
+  //   //             name="email-address"
+  //   //             id="email-address"
+  //   //             value={email}
+  //   //             onChange={handleEmailChange}
+  //   //             placeholder="yourname@example.com"
+  //   //             required
+  //   //           />
+  //   //         </div>
+
+  //   //         <div className="form-col">
+  //   //           <label htmlFor="phone-number">Phone Number</label>
+  //   //           <input
+  //   //             type="tel"
+  //   //             name="phone-number" // TODO: Check the docs and find out why curly braces around it was wrong
+  //   //             id="phone-number"
+  //   //             value={phoneNum}
+  //   //             onChange={handlePhoneChange}
+  //   //             required
+  //   //           />
+  //   //         </div>
+  //   //       </form>
+  //   //     );
+  //   //   }
+  //   return (
+  //     <>
+  //       {submitted ? (
+  //           <div className="completed-personal">
+  //             <h2>Personal Info</h2>
+  //             <div className="full-name">
+  //               <h3>Name</h3>
+  //               <p>{fullName}</p>
+  //             </div>
+  //             <div className="email-address">
+  //               <h3>Email</h3>
+  //               <p>{email}</p>
+  //             </div>
+  //             <div className="tel-phone-num">
+  //               <h3>Phone Number</h3>
+  //               <p>{phoneNum}</p>
+  //             </div>
+  //           </div>
+  //         ) : (
+  //         <form onSubmit={(e) => e.preventDefault()}>
+  //           <div className="form-col">
+  //             <label htmlFor="full-name">Full Name</label>
+  //             <input
+  //               name="full-name"
+  //               id="full-name"
+  //               value={fullName}
+  //               onChange={handleNameChange}
+  //               required
+  //             />
+  //           </div>
+
+  //           <div className="form-col">
+  //             <label htmlFor="email-address">Email</label>
+  //             <input
+  //               type={email} // TODO: Check the docs and make sure this syntax is correct
+  //               name="email-address"
+  //               id="email-address"
+  //               value={email}
+  //               onChange={handleEmailChange}
+  //               placeholder="yourname@example.com"
+  //               required
+  //             />
+  //           </div>
+
+  //           <div className="form-col">
+  //             <label htmlFor="phone-number">Phone Number</label>
+  //             <input
+  //               type="tel" // TODO: Check the docs and make sure this syntax is correct (and why curly braces isn't correct)
+  //               name="phone-number"
+  //               id="phone-number"
+  //               value={phoneNum}
+  //               onChange={handlePhoneChange}
+  //               required
+  //             />
+  //           </div>
+  //         </form>
+  //       )}
+  //     </>
+  //   )};
 
   // OPTION: Add "submitted" status as a {prop} in this function, then pass it down to the return statement as a conditional render via if/else statement or ternary operator ( {submitted ? show innerHTML or whatever HTML : form elements} ). See code just under <h1> in the App component as an example of ternary operator rendering the HTML elements upon submission. See Steps 1 and 2 examples on Sharing State Between Components.
 
   // TODO: Pass "onChange" as a prop, then add "onChange" as a prop to Personal when called above?
-  function Experience({
-    company,
-    position,
-    startDate,
-    endDate,
-    jobLocation,
-    description,
-  }) {
-  //   if (company !== "" && position !== "" && startDate !== "" && location !== "" && description !== "") {
+  // function Experience() {
+  //   const [company, setCompany] = useState("");
+  //   const [position, setPosition] = useState("");
+  //   const [startDate, setStartDate] = useState("");
+  //   const [endDate, setEndDate] = useState("");
+  //   const [jobLocation, setJobLocation] = useState("");
+  //   const [description, setDescription] = useState("");
+
+  //   function handleCompanyChange(e) {
+  //     setCompany(e.target.value);
+  //   }
+
+  //   function handlePositionChange(e) {
+  //     setPosition(e.target.value);
+  //   }
+
+  //   // TODO: See if we can put both setStartDate and setEndDate calls under one handleDateChange function
+  //   function handleStartDateChange(e) {
+  //     setStartDate(e.target.value);
+  //   }
+
+  //   function handleEndDateChange(e) {
+  //     setEndDate(e.target.value);
+  //   }
+
+  //   function handleJobLocationChange(e) {
+  //     setJobLocation(e.target.value);
+  //   }
+
+  //   function handleDescriptionChange(e) {
+  //     setDescription(e.target.value);
+  //   }
+
+  // //   if (company !== "" && position !== "" && startDate !== "" && location !== "" && description !== "") {
+  // //   return (
+  // //     <div className="completed-experience">
+  // //       <h2>Work Experience</h2>
+  // //       <div className="company-name">
+  // //         <h3>Company</h3>
+  // //         <p>{company}</p>
+  // //       </div>
+  // //       <div className="job-position">
+  // //         <h3>Position</h3>
+  // //         <p>{position}</p>
+  // //       </div>
+  // //       <div className="date-range">
+  // //         <h3>Start Date</h3>
+  // //         <p>{startDate}</p>
+  // //       </div>
+  // //       <div className="date-range">
+  // //         <h3>End Date</h3>
+  // //         <p>{endDate}</p>
+  // //       </div>
+  // //       <div className="job-location">
+  // //         <h3>Location</h3>
+  // //         <p>{location}</p>
+  // //       </div>
+  // //       <div className="job-duties">
+  // //         <h3>Main Responsibilities</h3>
+  // //         <p>{description}</p>
+  // //       </div>
+  // //     </div>
+  // //   )
+  // // } else {
+  // //   return (
+  // //     // Possibly move form over to App.jsx as one form so we don't have multiple forms to submit?
+  // //     <form onSubmit={(e) => e.preventDefault()}>
+  // //       {/* <h2>Work Experience</h2> */}
+  // //       <div className="form-grid">
+  // //         <label htmlFor="company-name">Company</label>
+  // //         <input
+  // //           name="company-name"
+  // //           id="company-name"
+  // //           value={company}
+  // //           onChange={handleCompanyChange}
+  // //         />
+  // //       </div>
+
+  // //       <div className="form-grid">
+  // //         <label htmlFor="job-position">Position</label>
+  // //         <input
+  // //           name="job-position"
+  // //           id="job-position"
+  // //           value={position}
+  // //           onChange={handlePositionChange}
+  // //         />
+  // //       </div>
+
+  // //       <div className="form-grid">
+  // //         <label htmlFor="date-range">Start Date</label>
+  // //         <input
+  // //           type="date" // TODO: Check the docs and make sure this syntax is correct (and why curly braces around it was wrong)
+  // //           name="date-range"
+  // //           id="date-range"
+  // //           value={startDate}
+  // //           onChange={handleStartDateChange} // BRANCH: Change this to handleDateChange if first BRANCH above can be accomplished
+  // //         />
+  // //       </div>
+
+  // //       <div className="form-grid">
+  // //         <label htmlFor="date-range">End Date</label>
+  // //         <input
+  // //           type="date" // TODO: Check the docs and make sure this syntax is correct (and why curly braces around it was wrong)
+  // //           name="date-range"
+  // //           id="date-range"
+  // //           value={endDate}
+  // //           onChange={handleEndDateChange} // BRANCH: Change this to handleDateChange if first BRANCH above can be accomplished
+  // //         />
+  // //       </div>
+
+  // //       <div className="form-grid">
+  // //         <label htmlFor="job-location">Location</label>
+  // //         <input
+  // //           name="job-location"
+  // //           id="job-location"
+  // //           value={location}
+  // //           onChange={handleLocationChange}
+  // //         />
+  // //       </div>
+
+  // //       <div className="form-grid">
+  // //         <label htmlFor="job-duties">Main Responsibilities</label>
+  // //         <input
+  // //           type="textarea" // TODO: Check the docs and make sure this syntax is correct (and why curly braces around it was wrong)
+  // //           name="job-duties"
+  // //           id="job-duties"
+  // //           value={description}
+  // //           onChange={handleDescriptionChange}
+  // //         />
+  // //       </div>
+  // //     </form>
+  // //   );
+  // // }
   //   return (
-  //     <div className="completed-experience">
-  //       <h2>Work Experience</h2>
-  //       <div className="company-name">
-  //         <h3>Company</h3>
-  //         <p>{company}</p>
-  //       </div>
-  //       <div className="job-position">
-  //         <h3>Position</h3>
-  //         <p>{position}</p>
-  //       </div>
-  //       <div className="date-range">
-  //         <h3>Start Date</h3>
-  //         <p>{startDate}</p>
-  //       </div>
-  //       <div className="date-range">
-  //         <h3>End Date</h3>
-  //         <p>{endDate}</p>
-  //       </div>
-  //       <div className="job-location">
-  //         <h3>Location</h3>
-  //         <p>{location}</p>
-  //       </div>
-  //       <div className="job-duties">
-  //         <h3>Main Responsibilities</h3>
-  //         <p>{description}</p>
-  //       </div>
-  //     </div>
-  //   )
-  // } else {
-  //   return (
-  //     // Possibly move form over to App.jsx as one form so we don't have multiple forms to submit?
   //     <form onSubmit={(e) => e.preventDefault()}>
   //       {/* <h2>Work Experience</h2> */}
   //       <div className="form-grid">
@@ -566,22 +1140,22 @@ export default function App() {
   //       <div className="form-grid">
   //         <label htmlFor="date-range">Start Date</label>
   //         <input
-  //           type="date" // TODO: Check the docs and make sure this syntax is correct (and why curly braces around it was wrong)
+  //           type="date" // TODO: Check the docs and make sure this syntax is correct (and why curly braces is not correct)
   //           name="date-range"
   //           id="date-range"
   //           value={startDate}
-  //           onChange={handleStartDateChange} // BRANCH: Change this to handleDateChange if first BRANCH above can be accomplished
+  //           onChange={handleStartDateChange} // TODO: Change this to handleDateChange if first TODO above can be accomplished
   //         />
   //       </div>
 
   //       <div className="form-grid">
   //         <label htmlFor="date-range">End Date</label>
   //         <input
-  //           type="date" // TODO: Check the docs and make sure this syntax is correct (and why curly braces around it was wrong)
+  //           type="date" // TODO: Check the docs and make sure this syntax is correct (and why curly braces is not correct)
   //           name="date-range"
   //           id="date-range"
   //           value={endDate}
-  //           onChange={handleEndDateChange} // BRANCH: Change this to handleDateChange if first BRANCH above can be accomplished
+  //           onChange={handleEndDateChange} // TODO: Change this to handleDateChange if first TODO above can be accomplished
   //         />
   //       </div>
 
@@ -590,17 +1164,18 @@ export default function App() {
   //         <input
   //           name="job-location"
   //           id="job-location"
-  //           value={location}
-  //           onChange={handleLocationChange}
+  //           value={jobLocation}
+  //           onChange={handleJobLocationChange}
   //         />
   //       </div>
 
   //       <div className="form-grid">
   //         <label htmlFor="job-duties">Main Responsibilities</label>
-  //         <input
-  //           type="textarea" // TODO: Check the docs and make sure this syntax is correct (and why curly braces around it was wrong)
+  //         <textarea
   //           name="job-duties"
   //           id="job-duties"
+  //           rows={10} // TODO: See if the rows/cols show up when textarea is under curly braces
+  //           cols={60}
   //           value={description}
   //           onChange={handleDescriptionChange}
   //         />
@@ -608,117 +1183,125 @@ export default function App() {
   //     </form>
   //   );
   // }
-    return (
-      <form onSubmit={(e) => e.preventDefault()}>
-        <h2>Work Experience</h2>
-        <div className="form-grid">
-          <label htmlFor="company-name">Company</label>
-          <input
-            name="company-name"
-            id="company-name"
-            value={company}
-            onChange={handleCompanyChange}
-          />
-        </div>
-
-        <div className="form-grid">
-          <label htmlFor="job-position">Position</label>
-          <input
-            name="job-position"
-            id="job-position"
-            value={position}
-            onChange={handlePositionChange}
-          />
-        </div>
-
-        <div className="form-grid">
-          <label htmlFor="date-range">Start Date</label>
-          <input
-            type="date" // TODO: Check the docs and make sure this syntax is correct (and why curly braces is not correct)
-            name="date-range"
-            id="date-range"
-            value={startDate}
-            onChange={handleStartDateChange} // TODO: Change this to handleDateChange if first TODO above can be accomplished
-          />
-        </div>
-
-        <div className="form-grid">
-          <label htmlFor="date-range">End Date</label>
-          <input
-            type="date" // TODO: Check the docs and make sure this syntax is correct (and why curly braces is not correct)
-            name="date-range"
-            id="date-range"
-            value={endDate}
-            onChange={handleEndDateChange} // TODO: Change this to handleDateChange if first TODO above can be accomplished
-          />
-        </div>
-
-        <div className="form-grid">
-          <label htmlFor="job-location">Location</label>
-          <input
-            name="job-location"
-            id="job-location"
-            value={jobLocation}
-            onChange={handleJobLocationChange}
-          />
-        </div>
-
-        <div className="form-grid">
-          <label htmlFor="job-duties">Main Responsibilities</label>
-          <textarea
-            name="job-duties"
-            id="job-duties"
-            rows={10} // TODO: See if the rows/cols show up when textarea is under curly braces
-            cols={60}
-            value={description}
-            onChange={handleDescriptionChange}
-          />
-        </div>
-      </form>
-    );
-  }
 
   // OPTION: Add "submitted" status as a {prop} in this function, then pass it down to the return statement as a conditional render via if/else statement or ternary operator ( {submitted ? show innerHTML or whatever HTML : form elements} ). See code just under <h1> in the App component as an example of ternary operator rendering the HTML elements upon submission. See Steps 1 and 2 examples on Sharing State Between Components.
 
   // TODO: May need to rename startDate, endDate and location due to same naming convention as Experience component? Or does React allow "duplicates"?
 
   // TODO: Pass "onChange" as a prop, then add "onChange" as a prop to Personal when called above?
-  function Education({
-    school,
-    major,
-    schoolStart,
-    schoolFinish,
-    schoolLocation,
-  }) {
-  //   if (school !== "" && major !== "" && startDate !== "" && location !== "") {
+  // function Education() {
+  //   const [school, setSchool] = useState("");
+  //   const [major, setMajor] = useState("");
+  //   const [schoolStart, setSchoolStart] = useState("");
+  //   const [schoolFinish, setSchoolFinish] = useState("");
+  //   const [schoolLocation, setSchoolLocation] = useState("");
+
+  //   function handleSchoolChange(e) {
+  //     setSchool(e.target.value);
+  //   }
+
+  //   function handleMajorChange(e) {
+  //     setMajor(e.target.value);
+  //   }
+
+  //   // TODO: See if we can put both setStartDate and setEndDate calls under one handleDateChange function
+  //   function handleSchoolStartChange(e) {
+  //     setSchoolStart(e.target.value);
+  //   }
+
+  //   function handleSchoolFinishChange(e) {
+  //     setSchoolFinish(e.target.value);
+  //   }
+
+  //   function handleSchoolLocationChange(e) {
+  //     setSchoolLocation(e.target.value);
+  //   }
+  // //   if (school !== "" && major !== "" && startDate !== "" && location !== "") {
+  // //   return (
+  // //     <div className="completed-education">
+  // //       <h2>Education</h2>
+  // //       <div className="school-name">
+  // //         <h3>Institution</h3>
+  // //         <p>{school}</p>
+  // //       </div>
+  // //       <div className="study-major">
+  // //         <h3>Title of Study/Major</h3>
+  // //         <p>{major}</p>
+  // //       </div>
+  // //       <div className="date-range">
+  // //         <h3>Start Date</h3>
+  // //         <p>{startDate}</p>
+  // //       </div>
+  // //       <div className="date-range">
+  // //         <h3>End Date</h3>
+  // //         <p>{endDate}</p>
+  // //       </div>
+  // //       <div className="school-location">
+  // //         <h3>Location</h3>
+  // //         <p>{location}</p>
+  // //       </div>
+  // //     </div>
+  // //   )
+  // // } else {
+  // //   return (
+  // //     // Possibly move form over to App.jsx as one form so we don't have multiple forms to submit?
+  // //     <form onSubmit={(e) => e.preventDefault()}>
+  // //       {/* <h2>Education</h2> */}
+  // //       <div className="form-grid">
+  // //         <label htmlFor="school-name">Institution</label>
+  // //         <input
+  // //           name="school-name"
+  // //           id="school-name"
+  // //           value={school}
+  // //           onChange={handleSchoolChange}
+  // //         />
+  // //       </div>
+
+  // //       <div className="form-grid">
+  // //         <label htmlFor="study-major">Title of Study/Major</label>
+  // //         <input
+  // //           name="study-major"
+  // //           id="study-major"
+  // //           value={major}
+  // //           onChange={handleMajorChange}
+  // //         />
+  // //       </div>
+
+  // //       <div className="form-grid">
+  // //         <label htmlFor="date-range">Start Date</label>
+  // //         <input
+  // //           type="date" // TODO: Check the docs and make sure this syntax is correct (and why curly braces around it was wrong)
+  // //           name="date-range"
+  // //           id="date-range"
+  // //           value={startDate}
+  // //           onChange={handleStartDateChange} // TODO: Change this to handleDateChange if first TODO above can be accomplished
+  // //         />
+  // //       </div>
+
+  // //       <div className="form-grid">
+  // //         <label htmlFor="date-range">End Date</label>
+  // //         <input
+  // //           type="date" // TODO: Check the docs and make sure this syntax is correct (and why curly braces around it was wrong)
+  // //           name="date-range"
+  // //           id="date-range"
+  // //           value={endDate}
+  // //           onChange={handleEndDateChange} // TODO: Change this to handleDateChange if first TODO above can be accomplished
+  // //         />
+  // //       </div>
+
+  // //       <div className="form-grid">
+  // //         <label htmlFor="school-location">Location</label>
+  // //         <input
+  // //           name="school-location"
+  // //           id="school-location"
+  // //           value={location}
+  // //           onChange={handleLocationChange}
+  // //         />
+  // //       </div>
+  // //     </form>
+  // //   );
+  // // }
   //   return (
-  //     <div className="completed-education">
-  //       <h2>Education</h2>
-  //       <div className="school-name">
-  //         <h3>Institution</h3>
-  //         <p>{school}</p>
-  //       </div>
-  //       <div className="study-major">
-  //         <h3>Title of Study/Major</h3>
-  //         <p>{major}</p>
-  //       </div>
-  //       <div className="date-range">
-  //         <h3>Start Date</h3>
-  //         <p>{startDate}</p>
-  //       </div>
-  //       <div className="date-range">
-  //         <h3>End Date</h3>
-  //         <p>{endDate}</p>
-  //       </div>
-  //       <div className="school-location">
-  //         <h3>Location</h3>
-  //         <p>{location}</p>
-  //       </div>
-  //     </div>
-  //   )
-  // } else {
-  //   return (
-  //     // Possibly move form over to App.jsx as one form so we don't have multiple forms to submit?
   //     <form onSubmit={(e) => e.preventDefault()}>
   //       {/* <h2>Education</h2> */}
   //       <div className="form-grid">
@@ -744,22 +1327,22 @@ export default function App() {
   //       <div className="form-grid">
   //         <label htmlFor="date-range">Start Date</label>
   //         <input
-  //           type="date" // TODO: Check the docs and make sure this syntax is correct (and why curly braces around it was wrong)
+  //           type="date" // TODO: Check the docs and make sure this syntax is correct (and why curly braces is not correct)
   //           name="date-range"
   //           id="date-range"
-  //           value={startDate}
-  //           onChange={handleStartDateChange} // TODO: Change this to handleDateChange if first TODO above can be accomplished
+  //           value={schoolStart}
+  //           onChange={handleSchoolStartChange} // TODO: Change this to handleDateChange if first TODO above can be accomplished
   //         />
   //       </div>
 
   //       <div className="form-grid">
   //         <label htmlFor="date-range">End Date</label>
   //         <input
-  //           type="date" // TODO: Check the docs and make sure this syntax is correct (and why curly braces around it was wrong)
+  //           type="date" // TODO: Check the docs and make sure this syntax is correct (and why curly braces is not correct)
   //           name="date-range"
   //           id="date-range"
-  //           value={endDate}
-  //           onChange={handleEndDateChange} // TODO: Change this to handleDateChange if first TODO above can be accomplished
+  //           value={schoolFinish}
+  //           onChange={handleSchoolFinishChange} // TODO: Change this to handleDateChange if first TODO above can be accomplished
   //         />
   //       </div>
 
@@ -768,70 +1351,13 @@ export default function App() {
   //         <input
   //           name="school-location"
   //           id="school-location"
-  //           value={location}
-  //           onChange={handleLocationChange}
+  //           value={schoolLocation}
+  //           onChange={handleSchoolLocationChange}
   //         />
   //       </div>
   //     </form>
   //   );
   // }
-    return (
-      <form onSubmit={(e) => e.preventDefault()}>
-        <h2>Education</h2>
-        <div className="form-grid">
-          <label htmlFor="school-name">Institution</label>
-          <input
-            name="school-name"
-            id="school-name"
-            value={school}
-            onChange={handleSchoolChange}
-          />
-        </div>
-
-        <div className="form-grid">
-          <label htmlFor="study-major">Position</label>
-          <input
-            name="study-major"
-            id="study-major"
-            value={major}
-            onChange={handleMajorChange}
-          />
-        </div>
-
-        <div className="form-grid">
-          <label htmlFor="date-range">Start Date</label>
-          <input
-            type="date" // TODO: Check the docs and make sure this syntax is correct (and why curly braces is not correct)
-            name="date-range"
-            id="date-range"
-            value={schoolStart}
-            onChange={handleSchoolStartChange} // TODO: Change this to handleDateChange if first TODO above can be accomplished
-          />
-        </div>
-
-        <div className="form-grid">
-          <label htmlFor="date-range">End Date</label>
-          <input
-            type="date" // TODO: Check the docs and make sure this syntax is correct (and why curly braces is not correct)
-            name="date-range"
-            id="date-range"
-            value={schoolFinish}
-            onChange={handleSchoolFinishChange} // TODO: Change this to handleDateChange if first TODO above can be accomplished
-          />
-        </div>
-
-        <div className="form-grid">
-          <label htmlFor="school-location">Location</label>
-          <input
-            name="school-location"
-            id="school-location"
-            value={schoolLocation}
-            onChange={handleSchoolLocationChange}
-          />
-        </div>
-      </form>
-    );
-  }
 }
 
 // END
