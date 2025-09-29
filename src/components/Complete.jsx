@@ -1,6 +1,4 @@
-import Incomplete from "./Incomplete"
-
-// TODO: Write a function or component for the Edit button that returns an event listener that runs the code. Utilize 'useState' (in App component since we have to "lift the state up"?) to change the state of the app when the button is interacted with
+// import Incomplete from "./Incomplete"
 
 export default function Complete() {
   // WHEN the user inputs all elements in the form, submits it, THEN clicks the Edit button
@@ -12,7 +10,7 @@ export default function Complete() {
 
     e.preventDefault();
     // May need to employ rendering techniques here (if certain form elements are complete, then... ternary/conditional/&& statement)
-    <Incomplete />
+    // <Incomplete />
   }
 
   return (
