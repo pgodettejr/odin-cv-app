@@ -11,6 +11,8 @@ export default function Personal() {
   const [email, setEmail] = useState("");
   const [phoneNum, setPhoneNum] = useState("");
 
+  // const [userInput, setUserInput] = useState("");
+
   function handleNameChange(e) {
     setFullName(e.target.value);
   }
@@ -22,6 +24,10 @@ export default function Personal() {
   function handlePhoneChange(e) {
     setPhoneNum(e.target.value);
   }
+
+  // function handleChange(e) {
+  //   setUserInput({[e.target.id] : e.target.value,});
+  // }
 
   // TODO: This conditional is currently being completely ignored and the form elements still render when this component is called in App even after submitting the resume via the Submit button. 
 
@@ -67,6 +73,7 @@ export default function Personal() {
           required
         />
       </div>
+      {/* TODO: Check to see if we need to pass a state to this Experience component call (e.g.: giSection={this.state}) */}
       <Experience />
     </>
   )};

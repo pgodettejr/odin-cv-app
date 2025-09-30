@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Education from "./Education";
 
-// TODO: Pass "onChange" as a prop, then add "onChange" as a prop to Personal when called above?
+// TODO: Pass "onChange" as a prop, then add "onChange" as a prop to Personal when called above? Or do we need to simply pass "props" here?
 export default function Experience() {
   const [company, setCompany] = useState("");
   const [position, setPosition] = useState("");
@@ -101,6 +101,7 @@ export default function Experience() {
           onChange={handleDescriptionChange}
         />
       </div>
+      {/* TODO: Check to see if we need to pass a state to this Education component call (e.g.: giSection={this.props.giSection} eduSection={this.state}) */}
       <Education />
     </>
   );

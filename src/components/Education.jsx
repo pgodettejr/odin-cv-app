@@ -85,6 +85,7 @@ export default function Education() {
           onChange={handleSchoolLocationChange}
         />
       </div>
+      {/* TODO: Check to see if we need to pass a state to the possible Buttons component call that might be needed here (e.g.: giSection={this.props.giSection} eduSection={this.props.eduSection} expSection={this.state}) */}
     </>
   );
 }
