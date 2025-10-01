@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Personal from "./Personal";
 // import Experience from "./Experience";
 // import Education from "./Education";
-import Complete from './Complete'
+// import Complete from './Complete'
 // import Incomplete from './Incomplete'
 import reactLogo from '../assets/react.svg'
 import viteLogo from '/vite.svg'
@@ -44,8 +44,8 @@ import '../styles/App.css'
 export default function App() {
   const [count, setCount] = useState(0)
 
-  const [isDisabled, setIsDisabled] = useState(false);
-  const [submitted, setSubmitted] = useState(false); // This is for setting the status and converting all the form data to HTML elements when "Submit" is clicked. We could try 'useState({})' if we go with the previous 'setSubmitted' call in the handleSubmit function.
+  // const [isDisabled, setIsDisabled] = useState(false);
+  // const [submitted, setSubmitted] = useState(false); - This is for setting the status and converting all the form data to HTML elements when "Submit" is clicked. We could try 'useState({})' if we go with the previous 'setSubmitted' call in the handleSubmit function.
 
   // Currently, we can either lift everything up but then the handle functions don't get read in the child functions (e.g.: Personal) or we can keep the useState code in their respective child functions and figure out a different way to render the HTML (without it auto generating to HTML if we do !== conditionals related to empty strings like we had before)
 
@@ -64,40 +64,40 @@ export default function App() {
 
   // Just have the completed info render as separate HTML instead of "changing" the form elements to HTML elements on submit? (our Weather App was the same way and this is the first React project - it doesn't have to be fancy!)
 
-  function toggleDisabled() {
-    setIsDisabled(!isDisabled);
-  }
+  // function toggleDisabled() {
+  //   setIsDisabled(!isDisabled);
+  // }
 
   // TODO: TRY to call the "Complete" component in this Submit button function if possible
-  function handleSubmit(e) {
-    e.preventDefault();
-    // TODO: Test this function out when the form is submitted after adding HTML elements to display each piece of info. Might need to rename startDate and endDate if React doesn't accept "duplicates". Doesn't work with simply values by itself. Need "property: key"?
-    // setSubmitted({
-    //   fullName,
-    //   email,
-    //   phoneNum,
-    //   company,
-    //   position,
-    //   startDate,
-    //   endDate,
-    //   location,
-    //   description,
-    //   school,
-    //   major,
-    // });
-    setSubmitted(true);
-    console.log("The Submit button was clicked and is now disabled");
-    toggleDisabled();
-    // <Form />
-  }
+  // function handleSubmit(e) {
+  //   e.preventDefault();
+  //   // TODO: Test this function out when the form is submitted after adding HTML elements to display each piece of info. Might need to rename startDate and endDate if React doesn't accept "duplicates". Doesn't work with simply values by itself. Need "property: key"?
+  //   // setSubmitted({
+  //   //   fullName,
+  //   //   email,
+  //   //   phoneNum,
+  //   //   company,
+  //   //   position,
+  //   //   startDate,
+  //   //   endDate,
+  //   //   location,
+  //   //   description,
+  //   //   school,
+  //   //   major,
+  //   // });
+  //   setSubmitted(true);
+  //   console.log("The Submit button was clicked and is now disabled");
+  //   toggleDisabled();
+  //   // <Form />
+  // }
 
   // TODO: The Edit button doesn't work. At all. Step through the code in DevTools after clicking on it and find out why.
-  function handleEdit(e) {
-    e.preventDefault();
-    setSubmitted(false); // Do we need this?
-    console.log("The Edit button was clicked and is now disabled");
-    toggleDisabled();
-  }
+  // function handleEdit(e) {
+  //   e.preventDefault();
+  //   setSubmitted(false); // Do we need this?
+  //   console.log("The Edit button was clicked and is now disabled");
+  //   toggleDisabled();
+  // }
 
   // DISPLAY all of these elements in the middle of the webpage
   
@@ -217,25 +217,6 @@ export default function App() {
         <h2>Education</h2>
         <Education />
         <Education /> */}
-        <div className="form-buttons">
-          <button
-            type="button"
-            id="editButton"
-            onClick={handleEdit}
-            // disabled={!isDisabled}
-          >
-            {/* {isDisabled ? "Disabled" : "Enabled"} */}
-            Edit
-          </button>
-          <button
-            type="submit" // Change this back to "button" if it doesn't work?
-            id="submitButton"
-            onClick={handleSubmit}
-            disabled={isDisabled}
-          >
-            Submit
-          </button>
-        </div>
       </div>
 
       <div>

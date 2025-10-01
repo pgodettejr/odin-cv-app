@@ -1,17 +1,19 @@
-// import Incomplete from "./Incomplete"
+import Buttons from "./Buttons"
 
-export default function Complete() {
+// TODO: This function doesn't render any of the HTML elements below when called in the handleSubmit function in the Buttons component. No errors in DevTools. Find out why (step through it again to see whats happening?). So far its no better than the previous solution where everything was under one Form component
+
+export default function Complete({ props }) {
   // WHEN the user inputs all elements in the form, submits it, THEN clicks the Edit button
   // CALL the editButton event listener that will:
-  function handleEditButton(e) {
-    // DISPLAY all the form elements with the previously entered info in each one
-    // setResumeForm((editForm) => editForm);
-    // setResumeForm(toggleForm OR resumeForm);
+  // function handleEditButton(e) {
+  //   // DISPLAY all the form elements with the previously entered info in each one
+  //   // setResumeForm((editForm) => editForm);
+  //   // setResumeForm(toggleForm OR resumeForm);
 
-    e.preventDefault();
-    // May need to employ rendering techniques here (if certain form elements are complete, then... ternary/conditional/&& statement)
-    // <Incomplete />
-  }
+  //   e.preventDefault();
+  //   // May need to employ rendering techniques here (if certain form elements are complete, then... ternary/conditional/&& statement)
+  //   // <Incomplete />
+  // }
 
   return (
     <>
@@ -32,15 +34,15 @@ export default function Complete() {
           <h2>Personal Info</h2>
           <div className="full-name">
             <h3>Name</h3>
-            <p>{fullName}</p>
+            <p>{props.fullName}</p>
           </div>
           <div className="email-address">
             <h3>Email</h3>
-            <p>{email}</p>
+            <p>{props.email}</p>
           </div>
           <div className="tel-phone-num">
             <h3>Phone Number</h3>
-            <p>{phoneNum}</p>
+            <p>{props.phoneNum}</p>
           </div>
         </div>
 
@@ -49,29 +51,29 @@ export default function Complete() {
           <h2>Work Experience</h2>
           <div className="company-name">
             <h3>Company</h3>
-            <p>{company}</p>
+            <p>{props.company}</p>
           </div>
           <div className="job-position">
             <h3>Position</h3>
-            <p>{position}</p>
+            <p>{props.position}</p>
           </div>
           {/* Rename 'date-range' to 'start-date' if needed */}
           <div className="date-range">
             <h3>Start Date</h3>
-            <p>{startDate}</p>
+            <p>{props.startDate}</p>
           </div>
           {/* Rename 'date-range' to 'end-date' if needed  */}
           <div className="date-range">
             <h3>End Date</h3>
-            <p>{endDate}</p>
+            <p>{props.endDate}</p>
           </div>
           <div className="job-location">
             <h3>Location</h3>
-            <p>{location}</p>
+            <p>{props.jobLocation}</p>
           </div>
           <div className="job-duties">
             <h3>Main Responsibilities</h3>
-            <p>{description}</p>
+            <p>{props.description}</p>
           </div>
         </div>
 
@@ -80,34 +82,35 @@ export default function Complete() {
           <h2>Education</h2>
           <div className="school-name">
             <h3>Institution</h3>
-            <p>{school}</p>
+            <p>{props.school}</p>
           </div>
           <div className="study-major">
             <h3>Study/Major</h3>
-            <p>{major}</p>
+            <p>{props.major}</p>
           </div>
           {/* Rename 'date-range' to 'start-date' if needed */}
           <div className="date-range">
             <h3>Start Date</h3>
-            <p>{schoolStart}</p>
+            <p>{props.schoolStart}</p>
           </div>
           {/* Rename 'date-range' to 'end-date' if needed  */}
           <div className="date-range">
             <h3>End Date</h3>
-            <p>{schoolFinish}</p>
+            <p>{props.schoolFinish}</p>
           </div>
           <div className="school-location">
             <h3>Location</h3>
-            <p>{schoolLocation}</p>
+            <p>{props.schoolLocation}</p>
           </div>
         </div>
 
         {/* DISPLAY the Edit and Submit buttons at the bottom of the form */}
         {/* Set disabled to "false" on the Edit button and to "true" on the Submit button when the Submit button is clicked. Edit is only available after submitting */}
-        <div className="form-buttons">
+        {/* <div className="form-buttons">
           <button type='button' id='editButton' onClick={handleEditButton} disabled='false' >Edit</button>
           <button type='button'id='submitButton' disabled='true' autoFocus >Submit</button>
-        </div>
+        </div> */}
+        <Buttons />
       </div>
     </>
   )

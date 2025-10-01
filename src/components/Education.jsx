@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Buttons from './Buttons';
 
 // We may need to separate the Submit/Edit buttons into their own component, import it here and call the component at the bottom like how we have the other components set up (import "Complete" component in Buttons component if this is the case)
 
@@ -86,6 +87,7 @@ export default function Education() {
         />
       </div>
       {/* TODO: Check to see if we need to pass a state to the possible Buttons component call that might be needed here (e.g.: giSection={this.props.giSection} eduSection={this.props.eduSection} expSection={this.state}) */}
+      <Buttons />
     </>
   );
 }
