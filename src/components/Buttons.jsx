@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Complete from "./Complete";
 
-export default function Buttons() {
+export default function Buttons({ props }) {
   const [isDisabled, setIsDisabled] = useState(false);
   const [submitted, setSubmitted] = useState(false); // This is for setting the status and converting all the form data to HTML elements when "Submit" is clicked. We could try 'useState({})' if we go with the previous 'setSubmitted' call in the handleSubmit function.
 
@@ -29,7 +29,22 @@ export default function Buttons() {
     setSubmitted(true);
     console.log("The Submit button was clicked and is now disabled");
     toggleDisabled();
-    <Complete />
+    <Complete
+      submitted={submitted}
+      fullName={props.fullName}
+      email={props.email}
+      phoneNum={props.phoneNum}
+      company={props.company}
+      position={props.position}
+      startDate={props.startDate}
+      endDate={props.endDate}
+      jobLocation={props.jobLocation}
+      description={props.description}
+      school={props.school}
+      major={props.major}
+      schoolStart={props.schoolStart}
+      schoolFinish={props.schoolFinish}
+      schoolLocation={props.schoolLocation} />
   }
 
   // TODO: The Edit button doesn't work. At all. Step through the code in DevTools after clicking on it and find out why.

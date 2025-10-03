@@ -110,7 +110,7 @@ export default function Complete({ props }) {
           <button type='button' id='editButton' onClick={handleEditButton} disabled='false' >Edit</button>
           <button type='button'id='submitButton' disabled='true' autoFocus >Submit</button>
         </div> */}
-        <Buttons />
+        {/* <Buttons /> */}
       </div>
     </>
   )

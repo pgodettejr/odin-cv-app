@@ -4,7 +4,7 @@ import Buttons from './Buttons';
 // We may need to separate the Submit/Edit buttons into their own component, import it here and call the component at the bottom like how we have the other components set up (import "Complete" component in Buttons component if this is the case)
 
 // TODO: Pass "onChange" as a prop, then add "onChange" as a prop to Personal when called above?
-export default function Education() {
+export default function Education({ props }) {
   const [school, setSchool] = useState("");
   const [major, setMajor] = useState("");
   const [schoolStart, setSchoolStart] = useState("");
@@ -87,7 +87,21 @@ export default function Education() {
         />
       </div>
       {/* TODO: Check to see if we need to pass a state to the possible Buttons component call that might be needed here (e.g.: giSection={this.props.giSection} eduSection={this.props.eduSection} expSection={this.state}) */}
-      <Buttons />
+      <Buttons
+        fullName={props.fullName}
+        email={props.email}
+        phoneNum={props.phoneNum}
+        company={props.company}
+        position={props.position}
+        startDate={props.startDate}
+        endDate={props.endDate}
+        jobLocation={props.jobLocation}
+        description={props.description}
+        school={school}
+        major={major}
+        schoolStart={schoolStart}
+        schoolFinish={schoolFinish}
+        schoolLocation={schoolLocation} />
     </>
   );
 }

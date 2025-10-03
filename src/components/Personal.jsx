@@ -74,7 +74,10 @@ export default function Personal() {
         />
       </div>
       {/* TODO: Check to see if we need to pass a state to this Experience component call (e.g.: giSection={this.state}) */}
-      <Experience />
+      <Experience
+        fullName={fullName}
+        email={email}
+        phoneNum={phoneNum} />
     </>
   )};
 
