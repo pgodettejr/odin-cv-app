@@ -1,15 +1,21 @@
-import { useState } from "react";
-import Education from "./Education";
+// import { useState } from "react";
+// import Education from "./Education";
 
 // TODO: Pass "onChange" as a prop, then add "onChange" as a prop to Personal when called above? Or do we need to simply pass "props" here?
-export default function Experience({ props }) {
-  const [company, setCompany] = useState("");
-  const [position, setPosition] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [jobLocation, setJobLocation] = useState("");
-  const [description, setDescription] = useState("");
-
+export default function Experience({ 
+  company,
+  position,
+  startDate,
+  endDate,
+  jobLocation,
+  description,
+  setCompany,
+  setPosition,
+  setStartDate,
+  setEndDate,
+  setJobLocation,
+  setDescription
+ }) {
   function handleCompanyChange(e) {
     setCompany(e.target.value);
   }
@@ -101,17 +107,6 @@ export default function Experience({ props }) {
           onChange={handleDescriptionChange}
         />
       </div>
-      {/* TODO: Check to see if we need to pass a state to this Education component call (e.g.: giSection={this.props.giSection} eduSection={this.state}) */}
-      <Education
-        fullName={props.fullName}
-        email={props.email}
-        phoneNum={props.phoneNum}
-        company={company}
-        position={position}
-        startDate={startDate}
-        endDate={endDate}
-        jobLocation={jobLocation}
-        description={description} />
     </>
   );
 }

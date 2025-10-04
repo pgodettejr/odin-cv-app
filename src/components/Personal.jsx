@@ -1,15 +1,20 @@
-import { useState } from "react";
+// import { useState } from "react";
 import Experience from "./Experience";
 
+// TODO: Getting "Uncaught TypeError: Cannot read properties of undefined (reading 'fullName')" for every dot notation prop in the return statement below. Change "props" parameter in this function and pass each prop for this section individually instead (fullName, email, phoneNum and their "set" companions). Then, run the app again in terminal to see if the form displays.
+
 // TODO: Pass "onChange" as a prop, then add "onChange" as a prop to Personal when called above?
-export default function Personal() {
+export default function Personal({ 
+  fullName,
+  email,
+  phoneNum,
+  setFullName,
+  setEmail,
+  setPhoneNum
+ }) {
   // const [isDisabled, setIsDisabled] = useState(false); - See ATTEMPT #4 below
 
   // setTimeout apparently causes all text inputs to not function at all, even after 60000 ms.
-
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phoneNum, setPhoneNum] = useState("");
 
   // const [userInput, setUserInput] = useState("");
 
@@ -41,7 +46,7 @@ export default function Personal() {
         <input
           name="full-name"
           id="full-name"
-          value={fullName}
+          value={fullName} // Uncaught TypeError: Cannot read properties of undefined (reading 'fullName')
           onChange={handleNameChange}
           required
         />
@@ -73,11 +78,6 @@ export default function Personal() {
           required
         />
       </div>
-      {/* TODO: Check to see if we need to pass a state to this Experience component call (e.g.: giSection={this.state}) */}
-      <Experience
-        fullName={fullName}
-        email={email}
-        phoneNum={phoneNum} />
     </>
   )};
 

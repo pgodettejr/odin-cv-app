@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import Personal from "./Personal";
-// import Experience from "./Experience";
-// import Education from "./Education";
+import Experience from "./Experience";
+import Education from "./Education";
+import Buttons from "./Buttons";
 // import Complete from './Complete'
 // import Incomplete from './Incomplete'
 import reactLogo from '../assets/react.svg'
@@ -10,6 +11,8 @@ import '../styles/App.css'
 // import { useFormState } from 'react-dom'
 
 // TODO: Refresh/review all React content in TOP from 'Getting Started With React' section up to this project if needed
+// Go over "Rendering Techniques" again - review the different rendering techniques used to render elements in React
+// Go over "Passing Data Between Components" again - review how to pass data around if we keep the separate components for each form section instead of one
 
 // Use console.log...a lot (confirm React batching state updates on re-renders)
 
@@ -24,6 +27,9 @@ import '../styles/App.css'
 // State: A Component's Memory (Challenges) - reference to how we should use React to do our forms? there are states for every input though
 // State as a Snapshot - entire doc has more examples of forms & form structure
 // Choosing the State Structure - see the dev comments in the App function below for grouping, state contradictions form example
+
+// TODO DOCS (if next iteration of app doesn't render HTML)
+// Adding Interactivity - read up more on how to render things
 // Thinking in React - how to organize project and how to approach component setup
 
 // BEGIN
@@ -243,15 +249,172 @@ export default function App() {
   );
 
   function Form() {
+    const [fullName, setFullName] = useState("");
+    const [email, setEmail] = useState("");
+    const [phoneNum, setPhoneNum] = useState("");
+
+    const [company, setCompany] = useState("");
+    const [position, setPosition] = useState("");
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+    const [jobLocation, setJobLocation] = useState("");
+    const [description, setDescription] = useState("");
+
+    const [school, setSchool] = useState("");
+    const [major, setMajor] = useState("");
+    const [schoolStart, setSchoolStart] = useState("");
+    const [schoolFinish, setSchoolFinish] = useState("");
+    const [schoolLocation, setSchoolLocation] = useState("");
+
     return (
       <>
-        <form onSubmit={(e) => e.preventDefault()}>
-          <Personal />
+        {/* TODO: Change this "onSubmit" to {handleSubmit} if we move all button code out of Button component to this App component */}
+        <form onSubmit={(e) => e.preventDefault()}> 
+          <Personal 
+            fullName={fullName}
+            email={email}
+            phoneNum={phoneNum}
+            setFullName={setFullName}
+            setEmail={setEmail}
+            setPhoneNum={setPhoneNum} />
+          <Experience
+            company={company}
+            position={position}
+            startDate={startDate}
+            endDate={endDate}
+            jobLocation={jobLocation}
+            description={description}
+            setCompany={setCompany}
+            setPosition={setPosition}
+            setStartDate={setStartDate}
+            setEndDate={setEndDate}
+            setJobLocation={setJobLocation}
+            setDescription={setDescription} />
+          <Education
+            school={school}
+            major={major}
+            schoolStart={schoolStart}
+            schoolFinish={schoolFinish}
+            schoolLocation={schoolLocation}
+            setSchool={setSchool}
+            setMajor={setMajor}
+            setSchoolStart={setSchoolStart}
+            setSchoolFinish={setSchoolFinish}
+            setSchoolLocation={setSchoolLocation} />
+          <Buttons
+            fullName={fullName}
+            email={email}
+            phoneNum={phoneNum}
+            // setFullName={setFullName}
+            // setEmail={setEmail}
+            // setPhoneNum={setPhoneNum}
+            company={company}
+            position={position}
+            startDate={startDate}
+            endDate={endDate}
+            jobLocation={jobLocation}
+            description={description}
+            // setCompany={setCompany}
+            // setPosition={setPosition}
+            // setStartDate={setStartDate}
+            // setEndDate={setEndDate}
+            // setJobLocation={setJobLocation}
+            // setDescription={setDescription}
+            school={school}
+            major={major}
+            schoolStart={schoolStart}
+            schoolFinish={schoolFinish}
+            schoolLocation={schoolLocation}
+            // setSchool={setSchool}
+            // setMajor={setMajor}
+            // setSchoolStart={setSchoolStart}
+            // setSchoolFinish={setSchoolFinish}
+            // setSchoolLocation={setSchoolLocation} 
+            />
         </form>
       </>
     );
   } 
 }
+
+// function Buttons({ props }) {
+//   const [isDisabled, setIsDisabled] = useState(false);
+//   const [submitted, setSubmitted] = useState(false); // This is for setting the status and converting all the form data to HTML elements when "Submit" is clicked. We could try 'useState({})' if we go with the previous 'setSubmitted' call in the handleSubmit function.
+
+//   function toggleDisabled() {
+//     setIsDisabled(!isDisabled);
+//   }
+
+//   // TODO: TRY to call the "Complete" component in this Submit button function if possible
+//   function handleSubmit(e) {
+//     e.preventDefault();
+//     // TODO: Test this function out when the form is submitted after adding HTML elements to display each piece of info. Might need to rename startDate and endDate if React doesn't accept "duplicates". Doesn't work with simply values by itself. Need "property: key"?
+//     // setSubmitted({
+//     //   fullName,
+//     //   email,
+//     //   phoneNum,
+//     //   company,
+//     //   position,
+//     //   startDate,
+//     //   endDate,
+//     //   location,
+//     //   description,
+//     //   school,
+//     //   major,
+//     // });
+//     setSubmitted(true);
+//     console.log("The Submit button was clicked and is now disabled");
+//     toggleDisabled();
+//     <Complete
+//       submitted={submitted}
+//       fullName={props.fullName}
+//       email={props.email}
+//       phoneNum={props.phoneNum}
+//       company={props.company}
+//       position={props.position}
+//       startDate={props.startDate}
+//       endDate={props.endDate}
+//       jobLocation={props.jobLocation}
+//       description={props.description}
+//       school={props.school}
+//       major={props.major}
+//       schoolStart={props.schoolStart}
+//       schoolFinish={props.schoolFinish}
+//       schoolLocation={props.schoolLocation} />
+//   }
+
+//   // TODO: The Edit button doesn't work. At all. Step through the code in DevTools after clicking on it and find out why.
+//   function handleEdit(e) {
+//     e.preventDefault();
+//     setSubmitted(false); // Do we need this?
+//     console.log("The Edit button was clicked and is now disabled");
+//     toggleDisabled();
+//   }
+
+//   return (
+//     <>
+//      <div className="form-buttons">
+//         <button
+//           type="button"
+//           id="editButton"
+//           onClick={handleEdit}
+//           // disabled={!isDisabled}
+//         >
+//           {/* {isDisabled ? "Disabled" : "Enabled"} */}
+//           Edit
+//         </button>
+//         <button
+//           type="submit" // Change this back to "button" if it doesn't work?
+//           id="submitButton"
+//           onClick={handleSubmit}
+//           disabled={isDisabled}
+//         >
+//           Submit
+//         </button>
+//       </div>
+//     </>
+//   )
+// }
 
 // END
 
