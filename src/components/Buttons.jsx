@@ -24,7 +24,6 @@ export default function Buttons({
     setIsDisabled(!isDisabled);
   }
 
-  // TODO: TRY to call the "Complete" component in this Submit button function if possible
   function handleSubmit(e) {
     e.preventDefault();
     // TODO: Test this function out when the form is submitted after adding HTML elements to display each piece of info. Might need to rename startDate and endDate if React doesn't accept "duplicates". Doesn't work with simply values by itself. Need "property: key"?
@@ -84,7 +83,6 @@ export default function Buttons({
           onClick={handleEdit}
           // disabled={!isDisabled}
         >
-          {/* {isDisabled ? "Disabled" : "Enabled"} */}
           Edit
         </button>
         <button

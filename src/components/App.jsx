@@ -2,17 +2,13 @@ import { useState } from 'react'
 import Personal from "./Personal";
 import Experience from "./Experience";
 import Education from "./Education";
-import Buttons from "./Buttons";
-// import Complete from './Complete'
+// import Buttons from "./Buttons";
+import Complete from './Complete'
 // import Incomplete from './Incomplete'
 import reactLogo from '../assets/react.svg'
 import viteLogo from '/vite.svg'
 import '../styles/App.css'
 // import { useFormState } from 'react-dom'
-
-// TODO: Refresh/review all React content in TOP from 'Getting Started With React' section up to this project if needed
-// Go over "Rendering Techniques" again - review the different rendering techniques used to render elements in React
-// Go over "Passing Data Between Components" again - review how to pass data around if we keep the separate components for each form section instead of one
 
 // Use console.log...a lot (confirm React batching state updates on re-renders)
 
@@ -27,10 +23,10 @@ import '../styles/App.css'
 // State: A Component's Memory (Challenges) - reference to how we should use React to do our forms? there are states for every input though
 // State as a Snapshot - entire doc has more examples of forms & form structure
 // Choosing the State Structure - see the dev comments in the App function below for grouping, state contradictions form example
+// Rendering Lists - Challenge #4 shows how to render HTML directly into an empty array to display it on the page
 
 // TODO DOCS (if next iteration of app doesn't render HTML)
 // Adding Interactivity - read up more on how to render things
-// Thinking in React - how to organize project and how to approach component setup
 
 // BEGIN
 // WHEN the user goes to the website/browser app via web address
@@ -74,7 +70,6 @@ export default function App() {
   //   setIsDisabled(!isDisabled);
   // }
 
-  // TODO: TRY to call the "Complete" component in this Submit button function if possible
   // function handleSubmit(e) {
   //   e.preventDefault();
   //   // TODO: Test this function out when the form is submitted after adding HTML elements to display each piece of info. Might need to rename startDate and endDate if React doesn't accept "duplicates". Doesn't work with simply values by itself. Need "property: key"?
@@ -223,6 +218,7 @@ export default function App() {
         <h2>Education</h2>
         <Education />
         <Education /> */}
+        {/* <Complete /> Calling this with no other props just makes the page render blank  */}
       </div>
 
       <div>
@@ -248,6 +244,7 @@ export default function App() {
     </>
   );
 
+  // TODO: Pass "props" to this function, then use spread syntax {...props} on every child component (e.g. <Personal {...props} />, etc.) instead of listing each state/prop individually
   function Form() {
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
@@ -266,72 +263,152 @@ export default function App() {
     const [schoolFinish, setSchoolFinish] = useState("");
     const [schoolLocation, setSchoolLocation] = useState("");
 
+    const [isDisabled, setIsDisabled] = useState(false);
+    const [submitted, setSubmitted] = useState(false); // This is for setting the status and converting all the form data to HTML elements when "Submit" is clicked. We could try 'useState({})' if we go with the previous 'setSubmitted' call in the handleSubmit function.
+
+    function toggleDisabled() {
+      setIsDisabled(!isDisabled);
+    }
+    
+    function handleSubmit(e) {
+      e.preventDefault();
+      // TODO: Test this function out when the form is submitted after adding HTML elements to display each piece of info. Might need to rename startDate and endDate if React doesn't accept "duplicates". Doesn't work with simply values by itself. Need "property: key"?
+      // setSubmitted({
+      //   fullName,
+      //   email,
+      //   phoneNum,
+      //   company,
+      //   position,
+      //   startDate,
+      //   endDate,
+      //   location,
+      //   description,
+      //   school,
+      //   major,
+      // });
+      setSubmitted(true);
+      console.log("The Submit button was clicked and is now disabled");
+      toggleDisabled();
+    }
+
+    // TODO: The Edit button doesn't work. At all. Step through the code in DevTools after clicking on it and find out why.
+    function handleEdit(e) {
+      e.preventDefault();
+      setSubmitted(false); // Do we need this?
+      console.log("The Edit button was clicked and is now disabled");
+      toggleDisabled();
+
+      return (
+        <>
+          <Form onSubmit={(e) => e.target.reset()} />
+        </>
+      )
+    }
+
     return (
       <>
-        {/* TODO: Change this "onSubmit" to {handleSubmit} if we move all button code out of Button component to this App component */}
-        <form onSubmit={(e) => e.preventDefault()}> 
-          <Personal 
-            fullName={fullName}
-            email={email}
-            phoneNum={phoneNum}
-            setFullName={setFullName}
-            setEmail={setEmail}
-            setPhoneNum={setPhoneNum} />
-          <Experience
-            company={company}
-            position={position}
-            startDate={startDate}
-            endDate={endDate}
-            jobLocation={jobLocation}
-            description={description}
-            setCompany={setCompany}
-            setPosition={setPosition}
-            setStartDate={setStartDate}
-            setEndDate={setEndDate}
-            setJobLocation={setJobLocation}
-            setDescription={setDescription} />
-          <Education
-            school={school}
-            major={major}
-            schoolStart={schoolStart}
-            schoolFinish={schoolFinish}
-            schoolLocation={schoolLocation}
-            setSchool={setSchool}
-            setMajor={setMajor}
-            setSchoolStart={setSchoolStart}
-            setSchoolFinish={setSchoolFinish}
-            setSchoolLocation={setSchoolLocation} />
-          <Buttons
-            fullName={fullName}
-            email={email}
-            phoneNum={phoneNum}
-            // setFullName={setFullName}
-            // setEmail={setEmail}
-            // setPhoneNum={setPhoneNum}
-            company={company}
-            position={position}
-            startDate={startDate}
-            endDate={endDate}
-            jobLocation={jobLocation}
-            description={description}
-            // setCompany={setCompany}
-            // setPosition={setPosition}
-            // setStartDate={setStartDate}
-            // setEndDate={setEndDate}
-            // setJobLocation={setJobLocation}
-            // setDescription={setDescription}
-            school={school}
-            major={major}
-            schoolStart={schoolStart}
-            schoolFinish={schoolFinish}
-            schoolLocation={schoolLocation}
-            // setSchool={setSchool}
-            // setMajor={setMajor}
-            // setSchoolStart={setSchoolStart}
-            // setSchoolFinish={setSchoolFinish}
-            // setSchoolLocation={setSchoolLocation} 
-            />
-        </form>
+        { submitted ? (
+          <Complete
+              submitted={submitted}
+              fullName={fullName}
+              email={email}
+              phoneNum={phoneNum}
+              company={company}
+              position={position}
+              startDate={startDate}
+              endDate={endDate}
+              jobLocation={jobLocation}
+              description={description}
+              school={school}
+              major={major}
+              schoolStart={schoolStart}
+              schoolFinish={schoolFinish}
+              schoolLocation={schoolLocation} />
+        ) : (
+          <form onSubmit={handleSubmit}> 
+            <Personal 
+              fullName={fullName}
+              email={email}
+              phoneNum={phoneNum}
+              setFullName={setFullName}
+              setEmail={setEmail}
+              setPhoneNum={setPhoneNum} />
+            <Experience
+              company={company}
+              position={position}
+              startDate={startDate}
+              endDate={endDate}
+              jobLocation={jobLocation}
+              description={description}
+              setCompany={setCompany}
+              setPosition={setPosition}
+              setStartDate={setStartDate}
+              setEndDate={setEndDate}
+              setJobLocation={setJobLocation}
+              setDescription={setDescription} />
+            <Education
+              school={school}
+              major={major}
+              schoolStart={schoolStart}
+              schoolFinish={schoolFinish}
+              schoolLocation={schoolLocation}
+              setSchool={setSchool}
+              setMajor={setMajor}
+              setSchoolStart={setSchoolStart}
+              setSchoolFinish={setSchoolFinish}
+              setSchoolLocation={setSchoolLocation} />
+            
+            <div className="form-buttons">
+              <button
+                type="button"
+                id="editButton"
+                onClick={handleEdit}
+                // disabled={!isDisabled}
+              >
+                Edit
+              </button>
+              <button
+                type="submit" // Change this back to "button" if it doesn't work?
+                id="submitButton"
+                onClick={handleSubmit}
+                disabled={isDisabled}
+              >
+                Submit
+              </button>
+            </div>
+
+            {/* <Buttons
+              fullName={fullName}
+              email={email}
+              phoneNum={phoneNum}
+              // setFullName={setFullName}
+              // setEmail={setEmail}
+              // setPhoneNum={setPhoneNum}
+              company={company}
+              position={position}
+              startDate={startDate}
+              endDate={endDate}
+              jobLocation={jobLocation}
+              description={description}
+              // setCompany={setCompany}
+              // setPosition={setPosition}
+              // setStartDate={setStartDate}
+              // setEndDate={setEndDate}
+              // setJobLocation={setJobLocation}
+              // setDescription={setDescription}
+              school={school}
+              major={major}
+              schoolStart={schoolStart}
+              schoolFinish={schoolFinish}
+              schoolLocation={schoolLocation}
+              // setSchool={setSchool}
+              // setMajor={setMajor}
+              // setSchoolStart={setSchoolStart}
+              // setSchoolFinish={setSchoolFinish}
+              // setSchoolLocation={setSchoolLocation} 
+              /> */}
+          </form>
+        )}
       </>
     );
   } 
