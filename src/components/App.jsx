@@ -308,7 +308,8 @@ export default function App() {
     return (
       <>
         { submitted ? (
-          <Complete
+          <div>
+            <Complete
               submitted={submitted}
               fullName={fullName}
               email={email}
@@ -324,6 +325,26 @@ export default function App() {
               schoolStart={schoolStart}
               schoolFinish={schoolFinish}
               schoolLocation={schoolLocation} />
+
+            <div className="form-buttons">
+              <button
+                type="button"
+                id="editButton"
+                onClick={handleEdit}
+                // disabled={!isDisabled}
+              >
+                Edit
+              </button>
+              <button
+                type="submit" // Change this back to "button" if it doesn't work?
+                id="submitButton"
+                onClick={handleSubmit}
+                disabled={isDisabled}
+              >
+                Submit
+              </button>
+            </div>
+          </div>
         ) : (
           <form onSubmit={handleSubmit}> 
             <Personal 

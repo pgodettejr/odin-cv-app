@@ -1,7 +1,5 @@
 // import Buttons from "./Buttons"
 
-// TODO: This function doesn't render any of the HTML elements below when called in the handleSubmit function in the Buttons component. No errors in DevTools. Find out why (step through it again to see whats happening?). So far its no better than the previous solution where everything was under one Form component
-
 export default function Complete({ 
   fullName,
   email,
@@ -34,10 +32,6 @@ export default function Complete({
   if (submitted) {
     return (
       <>
-        {/* {toggleResumeForm.map((form) => )} - wraps around the form below? */}
-        {/* DISPLAY the Heading element above the form */}
-        <h1>CV/Resumé App</h1>
-
         {/* DISPLAY each section of the form: Personal Info, Work Experience, Education */}
         <div className="cv-app">
 
@@ -127,7 +121,6 @@ export default function Complete({
             <button type='button' id='editButton' onClick={handleEditButton} disabled='false' >Edit</button>
             <button type='button'id='submitButton' disabled='true' autoFocus >Submit</button>
           </div> */}
-          {/* <Buttons /> */}
         </div>
       </>
     )
