@@ -1,5 +1,3 @@
-// import Buttons from "./Buttons"
-
 export default function Complete({ 
   fullName,
   email,
@@ -17,17 +15,6 @@ export default function Complete({
   schoolLocation,
   submitted
  }) {
-  // WHEN the user inputs all elements in the form, submits it, THEN clicks the Edit button
-  // CALL the editButton event listener that will:
-  // function handleEditButton(e) {
-  //   // DISPLAY all the form elements with the previously entered info in each one
-  //   // setResumeForm((editForm) => editForm);
-  //   // setResumeForm(toggleForm OR resumeForm);
-
-  //   e.preventDefault();
-  //   // May need to employ rendering techniques here (if certain form elements are complete, then... ternary/conditional/&& statement)
-  //   // <Incomplete />
-  // }
 
   if (submitted) {
     return (
@@ -114,13 +101,6 @@ export default function Complete({
               <p>{schoolLocation}</p>
             </div>
           </div>
-
-          {/* DISPLAY the Edit and Submit buttons at the bottom of the form */}
-          {/* Set disabled to "false" on the Edit button and to "true" on the Submit button when the Submit button is clicked. Edit is only available after submitting */}
-          {/* <div className="form-buttons">
-            <button type='button' id='editButton' onClick={handleEditButton} disabled='false' >Edit</button>
-            <button type='button'id='submitButton' disabled='true' autoFocus >Submit</button>
-          </div> */}
         </div>
       </>
     )
